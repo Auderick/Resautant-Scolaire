@@ -1,0 +1,101 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Démarrage de la session
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Inclure les fonctions d'authentification si elles existent
+$auth_functions_file = __DIR__ . '/../auth/auth_functions.php';
+if (file_exists($auth_functions_file)) {
+    require_once $auth_functions_file;
+} else {
+    // Fonction temporaire uniquement si les fonctions d'auth ne sont pas disponibles
+    if (!function_exists('isLoggedIn')) {
+        function isLoggedIn()
+        {
+            return isset($_SESSION['user_id']);
+        }
+    }
+}
+
+// Vérification d'authentification (sauf pour les pages d'auth)
+$current_file = basename($_SERVER['SCRIPT_NAME']);
+$auth_pages = ['login.php', 'logout.php'];
+
+if (!in_array($current_file, $auth_pages)) {
+    // Redirection vers la page de login si l'utilisateur n'est pas connecté
+    if (!isLoggedIn() && $current_file !== 'login.php') {
+        header('Location: /compte_restaurant_scolaire/auth/login.php');
+        exit;
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Scolaire</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Changez le chemin CSS ici -->
+    <link rel="stylesheet" href="/compte_restaurant_scolaire/public/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/compte_restaurant_scolaire/">Restaurant Scolaire</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/ventes/">Ventes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/achats/">Achats</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/stocks/">Stocks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/syntheses/">Synthèse</a>
+                        </li>
+                        <!-- Lien de gestion des utilisateurs uniquement pour les administrateurs -->
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/utilisateurs/index.php">
+                                <i class="fas fa-users"></i> Gestion utilisateurs
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                    <?php if (isLoggedIn()): ?>
+                    <div class="d-flex align-items-center">
+                        <span class="navbar-text me-3 mb-0 text-light">
+                            Bonjour,
+                            <?= htmlspecialchars($_SESSION['nom_complet'] ?? $_SESSION['username']) ?>
+                        </span>
+                        <a href="/compte_restaurant_scolaire/auth/logout.php" class="btn btn-outline-light btn-sm">
+                            Déconnexion
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container py-4">
