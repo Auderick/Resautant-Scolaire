@@ -23,5 +23,7 @@
     <script src="/compte_restaurant_scolaire/public/js/achats.js"></script>
     <script src="/compte_restaurant_scolaire/public/js/stocks.js"></script>
     <script src="/compte_restaurant_scolaire/public/js/commandes.js"></script>
+    <script src="/compte_restaurant_scolaire/public/js/menus.js"></script>
+    <script src="/compte_restaurant_scolaire/public/js/allergenes.js"></script>
 </body>
 </html>
