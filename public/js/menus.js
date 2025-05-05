@@ -43,7 +43,7 @@ function imprimerMenu(id) {
                         }
                         jourContenu += `
                             <div class="plat">
-                                🍽️ Entrée: ${data.menus[jour].entree} ${entreeIcons}
+                                🍽️ <strong>Entrée:</strong> ${data.menus[jour].entree} ${entreeIcons}
                                 ${allergenes}
                             </div>
                         `;
@@ -66,7 +66,7 @@ function imprimerMenu(id) {
                         }
                         jourContenu += `
                             <div class="plat">
-                                🍲 Plat: ${data.menus[jour].plat} ${platIcons}
+                                🍲 <strong>Plat:</strong> ${data.menus[jour].plat} ${platIcons}
                                 ${allergenes}
                             </div>
                         `;
@@ -89,7 +89,7 @@ function imprimerMenu(id) {
                         }
                         jourContenu += `
                             <div class="plat">
-                                🥗 Accompagnement: ${data.menus[jour].accompagnement} ${accompIcons}
+                                🥗 <strong>Accompagnement:</strong>: ${data.menus[jour].accompagnement} ${accompIcons}
                                 ${allergenes}
                             </div>
                         `;
@@ -112,7 +112,7 @@ function imprimerMenu(id) {
                         }
                         jourContenu += `
                             <div class="plat">
-                                🥛 Laitage: ${data.menus[jour].laitage} ${laitageIcons}
+                                🥛 <strong>Laitage:</strong> ${data.menus[jour].laitage} ${laitageIcons}
                                 ${allergenes}
                             </div>
                         `;
@@ -134,8 +134,8 @@ function imprimerMenu(id) {
                             }
                         }
                         jourContenu += `
-                            <div class="plat dessert">
-                                🍰 Dessert: ${data.menus[jour].dessert} ${dessertIcons}
+                            <div class="plat">
+                                🍰 <strong>Dessert:</strong> ${data.menus[jour].dessert} ${dessertIcons}
                                 ${allergenes}
                             </div>
                         `;
@@ -169,7 +169,7 @@ function imprimerMenu(id) {
                         <div class="header">
                             <h1>🏫 École de Leignes sur Fontaine</h1>
                             <p>📞 Tél: 05.49.56.90.10</p>
-                            <p>⏰ Service: 11h30 - 13h30</p>
+                            <p>⏰ Service: 12h00 - 13h30</p>
                             <button onclick="window.print()">🖨️ Imprimer le menu</button>
                         </div>
                         
@@ -211,17 +211,20 @@ function imprimerMenu(id) {
 function getYourCSS() {
     return `
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: "Comic Sans MS", cursive, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f0f9ff;
+            padding: 0;
+            background-color: white;
+            text-align: center; /* Centre tout le contenu par défaut */
+            display: flex;
+            justify-content: center;
         }
         
         .menu-container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 90%; /* Réduit légèrement la largeur pour un meilleur centrage */
+            margin: 0 auto; /* Centre le conteneur principal */
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -229,93 +232,105 @@ function getYourCSS() {
         .header {
             background-color: #2b76c0;
             color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
+        }
+        
+        .header h1, .header p {
+            color: white;
+            margin: 5px 0;
         }
         
         h1 {
             color: #70b1f2;
             text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-        }
-        
-        .jour {
-            margin-bottom: 30px;
-            border: 2px solid #87ceeb;
-            border-radius: 10px;
-            padding: 15px;
+            font-size: 20pt;
+            margin: 10px 0;
         }
         
         h2 {
             color: #4a90e2;
+            text-align: center;
+            font-size: 16pt;
+            margin: 10px 0;
+        }
+        
+        .jour {
+            margin-bottom: 10px;
+            border: 2px solid #87ceeb;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        
+        .jour h2 {
+            color: #4a90e2;
             border-bottom: 2px dashed #87ceeb;
-            padding-bottom: 5px;
+            padding-bottom: 3px;
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
         .plat {
-            margin: 10px 0;
+            margin: 4px auto; /* Auto pour les marges horizontales = centrage */
             padding: 5px;
-            transition: transform 0.2s ease-in-out;
-            cursor: pointer;
+            text-align: center; /* Centre le texte */
         }
         
         .plat:hover {
             transform: scale(1.02);
             background-color: #f8f9fa;
         }
-        
-        .dessert {
-            color: #e67e22;
-        }
+     
+        /* Suppression de la classe .dessert pour avoir une couleur uniforme */
         
         .vegetarien {
             color: #27ae60;
             font-style: italic;
         }
         
-        .info-nutritionnelle {
-            font-size: 0.8em;
-            background-color: #f0f0f0;
-            padding: 5px;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-        
         .allergenes {
             color: #e74c3c;
             font-weight: bold;
             display: block;
-            margin-top: 3px;
-            font-size: 0.9em;
+            margin-top: 1px;
+            font-size: 9pt;
         }
         
         .legende {
-            margin-top: 20px;
-            padding: 10px;
+            margin-top: 5px;
+            padding: 5px;
             background-color: #f5f5f5;
-            border-radius: 10px;
+            border-radius: 8px;
+        }
+        
+        .legende h3 {
+            margin: 2px 0;
+            color: #4a90e2;
+            font-size: 12pt;
         }
         
         .symboles {
             display: flex;
-            justify-content: space-around;
             flex-wrap: wrap;
             gap: 10px;
+            justify-content: center;
         }
         
         .symboles span {
             background-color: white;
-            padding: 5px 10px;
+            padding: 3px 8px;
             border-radius: 5px;
+            margin: 2px;
         }
         
         .note {
             text-align: center;
             font-style: italic;
-            margin-top: 20px;
+            margin-top: 5px;
+            font-size: 10pt;
         }
         
         /* Styles spécifiques pour l'impression */
@@ -325,17 +340,20 @@ function getYourCSS() {
                 padding: 0;
                 font-size: 10pt;
                 margin: 0;
+                display: flex;
+                justify-content: center;
             }
-            
+
             .menu-container {
                 box-shadow: none;
                 max-width: 100%;
-                padding: 10px;
+                padding: 2px;
+                margin: 0 auto;
             }
             
             .header {
-                padding: 10px;
-                margin-bottom: 10px;
+                padding: 2px;
+                margin-bottom: 2px;
             }
             
             .header h1 {
@@ -344,46 +362,42 @@ function getYourCSS() {
             }
             
             .header p {
-                margin: 2px 0;
-                font-size: 9pt;
+                margin: 0;
+                font-size: 12pt;
             }
             
             h1 {
                 font-size: 14pt;
-                margin: 10px 0;
+                margin: 3px 0;
             }
             
             h2 {
                 font-size: 12pt;
-                margin: 5px 0;
-                padding-bottom: 2px;
+                margin: 3px;
+                padding-bottom: 0;
             }
             
             .jour {
-                margin-bottom: 10px;
-                padding: 8px;
+                margin-bottom: 5px;
+                padding: 2px;
                 border-width: 1px;
             }
             
             .plat {
-                margin: 3px 0;
+                text-align: center;
+                margin: 0 auto;
                 padding: 2px;
-            }
-            
-            .info-nutritionnelle {
-                font-size: 8pt;
-                padding: 2px;
-                margin-top: 2px;
+                font-size: 11pt;
             }
             
             .legende {
                 margin-top: 10px;
-                padding: 5px;
+                padding: 3px;
             }
             
             .legende h3 {
                 font-size: 10pt;
-                margin: 2px 0;
+                margin: 1px 0;
             }
             
             .symboles {
@@ -391,12 +405,12 @@ function getYourCSS() {
             }
             
             .symboles span {
-                padding: 2px 5px;
+                padding: 1px 3px;
                 font-size: 8pt;
             }
             
             @page {
-                margin: 0.5cm;
+                margin: 0.2cm;
                 size: A4;
             }
             
@@ -406,6 +420,7 @@ function getYourCSS() {
         }
     `;
 }
+
 
 /**
  * Fonction pour télécharger un menu au format PDF

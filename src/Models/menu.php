@@ -68,7 +68,7 @@ class Menu
                       numero_semaine = ?, annee = ?, date_debut = ?, date_fin = ?, active = ? 
                       WHERE id = ?";
             $stmt = $this->db->prepare($query);
-            return $stmt->execute([
+            $result = $stmt->execute([
                 $data['numero_semaine'],
                 $data['annee'],
                 $data['date_debut'],
@@ -76,6 +76,10 @@ class Menu
                 isset($data['active']) ? 1 : 0,
                 $data['id']
             ]);
+
+            // Retourner l'ID existant si la mise à jour a réussi
+            return $result ? $data['id'] : false;
+
         } else {
             // Création
             $query = "INSERT INTO menus_semaines (numero_semaine, annee, date_debut, date_fin, active) 

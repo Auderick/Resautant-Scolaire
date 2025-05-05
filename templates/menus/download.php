@@ -72,9 +72,11 @@ foreach ($menusSemaine as $menuJour) {
     // Traitement des options et allergènes
     if (is_array($menuJour['options'])) {
         $options = $menuJour['options'];
-    } elseif (!empty($menuJour['options']) && is_string($menuJour['options'])) {
+    }
+    elseif (!empty($menuJour['options']) && is_string($menuJour['options'])) {
         $options = json_decode($menuJour['options'], true);
-    } elseif (!empty($menuJour['options'])) {
+    }
+    elseif (!empty($menuJour['options'])) {
         $optionsValue = explode(',', $menuJour['options']);
         $options = ['plat' => $optionsValue];
     } else {
@@ -118,11 +120,11 @@ $html = '
             margin: 0;
             padding: 0;
             background-color: white;
+            text-align: center; /* Centre tout le contenu par défaut */
         }
-        
         .menu-container {
-            max-width: 100%;
-            margin: 0 auto;
+            max-width: 90%; /* Réduit légèrement la largeur pour un meilleur centrage */
+            margin: 0 auto; /* Centre le conteneur principal */
             background-color: white;
             padding: 15px;
         }
@@ -145,7 +147,7 @@ $html = '
             color: #70b1f2;
             text-align: center;
             font-size: 20pt;
-            margin: 15px 0;
+            margin: 10px 0;
         }
         
         h2 {
@@ -156,30 +158,27 @@ $html = '
         }
         
         .jour {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border: 2px solid #87ceeb;
             border-radius: 10px;
-            padding: 10px;
+            padding: 5px;
         }
         
         .jour-titre {
             color: #4a90e2;
             border-bottom: 2px dashed #87ceeb;
-            padding-bottom: 5px;
+            padding-bottom: 3px;
             font-size: 14pt;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         
         .plat {
-            margin: 8px 0;
+            margin: 4px auto; /* Auto pour les marges horizontales = centrage */
             padding: 5px;
+            text-align: center; /* Centre le texte 
         }
-        
-        .dessert {
-            color: #e67e22;
-        }
-        
+     
         .vegetarien {
             color: #27ae60;
             font-style: italic;
@@ -189,19 +188,19 @@ $html = '
             color: #e74c3c;
             font-weight: bold;
             display: block;
-            margin-top: 3px;
+            margin-top: 1px;
             font-size: 9pt;
         }
         
         .legende {
-            margin-top: 20px;
-            padding: 10px;
+            margin-top: 5px;
+            padding: 5px;
             background-color: #f5f5f5;
-            border-radius: 10px;
+            border-radius: 8px;
         }
         
         .legende h3 {
-            margin: 5px 0;
+            margin: 2px 0;
             color: #4a90e2;
             font-size: 12pt;
         }
@@ -290,7 +289,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['entree'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-
+                    
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['entree']) && !empty($menus[$jour]['allergenes']['entree'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['entree']) . ')</span>';
@@ -300,7 +299,7 @@ foreach ($jours as $index => $jour) {
 
             $html .= '
             <div class="plat">
-                Entrée: ' . $entree . ' ' . $icones . '
+                <strong>Entrée:</strong> ' . $entree . ' ' . $icones . '
                 ' . $allergeneInfo . '
             </div>';
         }
@@ -325,17 +324,16 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['plat'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-
+                    
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['plat']) && !empty($menus[$jour]['allergenes']['plat'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['plat']) . ')</span>';
                     }
                 }
             }
-
             $html .= '
             <div class="plat">
-                Plat: ' . $plat . ' ' . $icones . '
+                <strong>Plat:</strong> ' . $plat . ' ' . $icones . '
                 ' . $allergeneInfo . '
             </div>';
         }
@@ -360,7 +358,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['accompagnement'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-
+                    
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['accompagnement']) && !empty($menus[$jour]['allergenes']['accompagnement'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['accompagnement']) . ')</span>';
@@ -370,7 +368,7 @@ foreach ($jours as $index => $jour) {
 
             $html .= '
             <div class="plat">
-                Accompagnement: ' . $accompagnement . ' ' . $icones . '
+                <strong>Accompagnement:</strong> ' . $accompagnement . ' ' . $icones . '
                 ' . $allergeneInfo . '
             </div>';
         }
@@ -395,7 +393,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['laitage'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-
+                    
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['laitage']) && !empty($menus[$jour]['allergenes']['laitage'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['laitage']) . ')</span>';
@@ -405,7 +403,7 @@ foreach ($jours as $index => $jour) {
 
             $html .= '
             <div class="plat">
-                Laitage: ' . $laitage . ' ' . $icones . '
+                <strong>Laitage:</strong> ' . $laitage . ' ' . $icones . '
                 ' . $allergeneInfo . '
             </div>';
         }
@@ -430,7 +428,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['dessert'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-
+                    
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['dessert']) && !empty($menus[$jour]['allergenes']['dessert'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['dessert']) . ')</span>';
@@ -439,8 +437,8 @@ foreach ($jours as $index => $jour) {
             }
 
             $html .= '
-            <div class="plat dessert">
-                Dessert: ' . $dessert . ' ' . $icones . '
+            <div class="plat">
+                <strong>Dessert:</strong> ' . $dessert . ' ' . $icones . '
                 ' . $allergeneInfo . '
             </div>';
         }

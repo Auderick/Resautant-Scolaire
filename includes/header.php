@@ -67,6 +67,9 @@ if (!in_array($current_file, $auth_pages)) {
                             <a class="nav-link" href="/compte_restaurant_scolaire/">Accueil</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/menus/">Menus</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/ventes/">Ventes</a>
                         </li>
                         <li class="nav-item">
