@@ -98,7 +98,7 @@ class Synthese
     COALESCE(SUM(v.nb_repas * v.prix_unitaire), 0) as total_ventes,
     SUM(v.nb_repas) as nombre_couverts,
     (
-        SELECT COALESCE(SUM(a.montant), 0)
+        SELECT COALESCE(SUM(a.montant_total), 0)
         FROM achats a
         WHERE DATE_FORMAT(a.date_achat, '%Y-%m') = ?
     ) as total_achats,

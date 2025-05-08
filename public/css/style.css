@@ -149,3 +149,32 @@ footer {
     margin-top: auto;
     padding: 2rem 0;
 }
+
+/* Style pour les lignes d'achats appartenant à une commande */
+tr.from-commande {
+    background-color: #f8f9fa;
+    /* Légère couleur de fond */
+}
+
+tr.from-commande td:first-child {
+    padding-left: 20px !important;
+    /* Indentation */
+    position: relative;
+}
+
+tr.from-commande td:first-child::before {
+    content: "─";
+    position: absolute;
+    left: 10px;
+    color: #6c757d;
+}
+
+/* Style pour l'en-tête de groupe de commande */
+tr.commande-header {
+    border-top: 2px solid #dee2e6;
+}
+
+tr.commande-header td {
+    background-color: #e9ecef !important;
+    font-weight: bold;
+}

@@ -231,16 +231,16 @@ $stocks = $stock->getListe($mois, $annee);
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    <tfoot>
-                        <tr class="table-primary">
-                            <td colspan="3"><strong>Valeur totale du stock</strong></td>
-                            <td colspan="5">
-                                <strong><?= number_format($total_stock, 2) ?>
-                                    €</strong>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </table>
+                <tfoot>
+                    <tr class="table-primary">
+                        <td colspan="3"><strong>Valeur totale du stock</strong></td>
+                        <td colspan="5">
+                            <strong><?= number_format($total_stock, 2) ?>
+                                €</strong>
+                        </td>
+                    </tr>
+                </tfoot>
             </div>
         </div>
     </div>

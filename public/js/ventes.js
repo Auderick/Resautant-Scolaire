@@ -124,12 +124,20 @@ function imprimerVentes() {
         maximumFractionDigits: 2
     }).format(totalGeneral);
 
+    // Obtenir le mois courant en français
+    const date = new Date();
+    const mois = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(date);
+    const annee = date.getFullYear();
+
+    // Mettre la première lettre en majuscule
+    const moisCapitalized = mois.charAt(0).toUpperCase() + mois.slice(1);
+
     // Créer le contenu HTML à imprimer
     const html = `
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Liste des Ventes</title>
+            <title>Liste des Ventes - ${moisCapitalized} ${annee}</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
             <style>
                 body { 
@@ -137,6 +145,13 @@ function imprimerVentes() {
                     font-family: Arial, sans-serif;
                 }
                 @media print {
+                    @page {
+                        margin: 0.5cm;
+                        size: portrait; /* Format portrait pour économiser du papier */
+                    }
+                    html {
+                        height: 99%; /* Cette ligne est la clé pour masquer l'URL */
+                    }
                     .no-print { 
                         display: none; 
                     }
@@ -164,7 +179,7 @@ function imprimerVentes() {
         </head>
         <body>
             <div class="container">
-                <h1 class="text-center mb-4">Liste des Ventes</h1>
+                <h1 class="text-center mb-4">Liste des Ventes - ${moisCapitalized} ${annee}</h1>
                 <div class="table-responsive">
                     ${tableau.outerHTML}
                 </div>

@@ -58,7 +58,8 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Bon de Commande
-            <?= $commande['id'] ?></h1>
+            <?= $commande['id'] ?>
+        </h1>
         <div>
             <a href="index.php" class="btn btn-secondary">Retour à la liste</a>
             <button onclick="imprimerCommande(<?= $commandeId ?>)"
@@ -78,7 +79,8 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
 
     <?php if (isset($message)): ?>
     <div class="alert alert-success">
-        <?= htmlspecialchars($message) ?></div>
+        <?= htmlspecialchars($message) ?>
+    </div>
     <?php endif; ?>
 
     <?php if (isset($erreur)): ?>
@@ -128,6 +130,20 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
                                 </span>
                             </td>
                         </tr>
+                        <?php if (isset($commande['convertie_en_achats']) && $commande['convertie_en_achats']): ?>
+                        <tr>
+                            <td colspan="2">
+                                <div class="alert alert-success mt-2 mb-0">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Cette commande a été automatiquement ajoutée aux achats.
+                                    <a href="../achats/index.php?filtre_commande=<?= $commande['id'] ?>"
+                                        class="alert-link">
+                                        Voir les achats générés
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
                         <?php if (!empty($commande['notes'])): ?>
                         <tr>
                             <th>Notes:</th>
@@ -172,7 +188,7 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
                             <strong>Restaurant Scolaire</strong><br>
                             École de Leignes sur Fontaine<br>
                             [Adresse complète]<br>
-                            Tél: [Numéro de téléphone]<br>
+                            Tél: 06 77 80 41 55<br>
                             Email: [Adresse email]
                         </div>
                         <div class="col-6 text-end">
@@ -235,7 +251,8 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
                                 <tr>
                                     <th colspan="4" class="text-end">Total</th>
                                     <th class="text-end">
-                                        <?= $totalFormate ?> €</th>
+                                        <?= $totalFormate ?> €
+                                    </th>
                                 </tr>
                             </tfoot>
                         </table>

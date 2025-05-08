@@ -42,7 +42,7 @@ if (!in_array($current_file, $auth_pages)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Scolaire</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Changez le chemin CSS ici -->
     <link rel="stylesheet" href="/compte_restaurant_scolaire/public/css/style.css">
@@ -68,6 +68,9 @@ if (!in_array($current_file, $auth_pages)) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/menus/">Menus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/commandes/">Commandes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/ventes/">Ventes</a>

@@ -129,6 +129,13 @@ function imprimerStocks() {
                         font-weight: bold;
                         text-align: right;
                     }
+                    @page {
+                        margin: 0.5cm;
+                        size: portrait; /* Format portrait pour économiser du papier */
+                    }
+                     html {
+                        height: 99%; /* Cette ligne est la clé pour masquer l'URL */
+                    }
                 }
             </style>
         </head>

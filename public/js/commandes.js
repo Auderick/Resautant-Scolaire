@@ -80,23 +80,24 @@ function imprimerCommande(id) {
                         <style>
                             body { 
                                 font-family: Arial, sans-serif; 
-                                padding: 20px;
+                                padding: 10px;
+                                font-size: 13px;
                                 margin: 0;
                             }
                             h1, h2, h3 { 
-                                margin-bottom: 15px; 
+                                margin-bottom: 12px; 
                             }
                             .header { 
                                 text-align: center; 
-                                margin-bottom: 30px; 
+                                margin-bottom: 15px; 
                             }
                             table {
                                 width: 100%;
                                 border-collapse: collapse;
-                                margin-bottom: 20px;
+                                margin-bottom: 15px;
                             }
                             th, td {
-                                padding: 8px;
+                                padding: 5px;
                                 text-align: left;
                                 border: 1px solid #ddd;
                             }
@@ -124,18 +125,22 @@ function imprimerCommande(id) {
                                 text-align: center;
                             }
                             .footer { 
-                                margin-top: 50px; 
+                                margin-top: 20px; 
                             }
-                            .signature { 
-                                width: 45%; 
-                                float: left; 
-                                margin-right: 5%; 
-                                border-top: 1px solid #000; 
-                                padding-top: 10px; 
+                            .reception-table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
                             }
-                            .signature-right { 
-                                margin-right: 0; 
-                                float: right; 
+                            .reception-table th, .reception-table td {
+                                padding: 8px;
+                                text-align: left;
+                                border: 1px solid #ddd;
+                                vertical-align: top;
+                            }
+                            .reception-table th {
+                                background-color: #f5f5f5;
+                                font-weight: bold;
                             }
                             .info-table {
                                 width: 100%;
@@ -161,9 +166,43 @@ function imprimerCommande(id) {
                                 font-size: 16px;
                             }
                             @media print {
-                                .no-print {
-                                    display: none;
+                                @page {
+                                    margin: 0.5cm;
                                 }
+                                html {
+                                    height: 99%;
+                                }   
+                                .no-print {
+                                    display: none !important;
+                                }
+                                  tr {
+                                    page-break-inside: avoid;
+                                }
+                                
+                                table {
+                                    page-break-inside: auto;
+                                }
+                                
+                                thead {
+                                    display: table-header-group;
+                                }
+                                
+                                tfoot {
+                                    display: table-footer-group;
+                                }
+                                
+                                body {
+                                    padding: 5px;
+                                    font-size: 13px;
+                                }
+                                
+                                th, td {
+                                    padding: 3px;
+                                }
+                                
+                                .reception-table tr td[height="80px"] {
+                                    height: 50px;
+                                }  
                             }
                         </style>
                     </head>
@@ -179,8 +218,8 @@ function imprimerCommande(id) {
                                 École de Leignes sur Fontaine<br>
                                 2, place de la Mairie<br>
                                 86300 Leignes sur Fontaine<br>
-                                Tél: 05 49 37 93 13<br>
-                                Email: restaurant.scolaire@leignes.fr
+                                Tél: 06 77 80 41 55<br>
+                                Email: 
                             </div>
                             
                             <div class="supplier-block">
@@ -227,18 +266,60 @@ function imprimerCommande(id) {
                                     <th class="text-end">${totalFormate} €</th>
                                 </tr>
                             </tfoot>
-                        </table>
-                        
+                        </table>                       
                         <div class="footer">
-                            <div class="signature">
-                                <p><strong>Date et signature du Restaurant Scolaire :</strong></p>
-                            </div>
-                            <div class="signature signature-right">
-                                <p><strong>Date et signature du Fournisseur :</strong></p>
-                            </div>
+                            <h3>Contrôle à réception</h3>
+                            <table class="reception-table">
+                                <tr>
+                                    <th style="width: 20%;">Date de réception</th>
+                                    <td style="width: 30%;"></td>
+                                    <th style="width: 20%;">Heure de réception</th>
+                                    <td style="width: 30%;"></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="4">Nom du produit contrôlé</th>
+                                </tr>
+                                
+                                <tr>
+                                    <th colspan="4">Contrôle de température d'une catégorie de produits</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" height="80px">
+                                        <table style="width:100%; border:none;">
+                                            <tr style="border:none;">
+                                                <td style="border:none; width: 33%;">
+                                                    <strong>Produits frais (0°C à +4°C)</strong><br>
+                                                    Température relevée: ________ °C<br>
+                                                    □ Conforme &nbsp; □ Non conforme
+                                                </td>
+                                                <td style="border:none; width: 33%;">
+                                                    <strong>Produits surgelés (-18°C)</strong><br>
+                                                    Température relevée: ________ °C<br>
+                                                    □ Conforme &nbsp; □ Non conforme
+                                                </td>
+                                                <td style="border:none; width: 33%;">
+                                                    <strong>Autres produits réfrigérés</strong><br>
+                                                    Température relevée: ________ °C<br>
+                                                    □ Conforme &nbsp; □ Non conforme
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <th colspan="4">Observations (produits manquants, substitutions, anomalies)</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" height="80px"></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="4">Nom et signature du réceptionnaire</th>                                   
+                                </tr>                                
+                            </table>
                             <div class="clear"></div>
-                        </div>
-                        
+                        </div> 
+                      
                         <button onclick="window.print()" class="print-btn no-print">
                             Imprimer
                         </button>

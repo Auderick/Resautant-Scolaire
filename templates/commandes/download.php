@@ -82,8 +82,9 @@ $html = '
     <div class="address-block">
         <strong>Restaurant Scolaire</strong><br>
         École de Leignes sur Fontaine<br>
-        [Adresse complète]<br>
-        Tél: [Numéro de téléphone]<br>
+        2, place de la Mairie<br>
+        86300 Leignes sur Fontaine<br>
+        Tél: 06 77 80 41 55<br>
         Email: [Adresse email]
     </div>
     
