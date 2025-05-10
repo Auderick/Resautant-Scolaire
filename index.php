@@ -1,12 +1,32 @@
 <?php
 require_once __DIR__ . '/includes/header.php';
-
 ?>
 
 <div class="container">
     <h1 class="text-center mb-5">Gestion Restaurant Scolaire</h1>
 
     <div class="row justify-content-center g-4">
+        <!-- Menus -->
+        <div class="col-md-4">
+            <a href="templates/menus/index.php" class="card h-100 text-decoration-none" target="_blank">
+                <div class="card-body text-center">
+                    <h2 class="card-title">Menus</h2>
+                    <p class="card-text">Gérer les menus</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Commandes -->
+        <div class="col-md-4">
+            <a href="templates/commandes/index.php" class="card h-100 text-decoration-none">
+                <div class="card-body text-center">
+                    <h2 class="card-title">Commandes</h2>
+                    <p class="card-text">Gérer les commandes fournisseurs</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Ventes -->
         <div class="col-md-4">
             <a href="templates/ventes/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
@@ -16,6 +36,7 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
+        <!-- Achats -->
         <div class="col-md-4">
             <a href="templates/achats/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
@@ -25,6 +46,7 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
+        <!-- Stocks -->
         <div class="col-md-4">
             <a href="templates/stocks/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
@@ -33,27 +55,23 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </a>
         </div>
+
+        <!-- Synthèses -->
         <div class="col-md-4">
             <a href="templates/syntheses/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
-                    <h2 class="card-title">Synthèse</h2>
+                    <h2 class="card-title">Synthèses</h2>
                     <p class="card-text">Voir les rapports</p>
                 </div>
             </a>
         </div>
+
+        <!-- Gestion des utilisateurs -->
         <div class="col-md-4">
-            <a href="templates/menus/index.php" class="card h-100 text-decoration-none" target="_blank">
+            <a href="templates/utilisateurs/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
-                    <h2 class="card-title">Menus</h2>
-                    <p class="card-text">Voir les menus</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4">
-            <a href="templates/commandes/index.php" class="card h-100 text-decoration-none">
-                <div class="card-body text-center">
-                    <h2 class="card-title">Commandes</h2>
-                    <p class="card-text">Gérer les commandes fournisseurs</p>
+                    <h2 class="card-title">Utilisateurs</h2>
+                    <p class="card-text">Gérer les utilisateurs</p>
                 </div>
             </a>
         </div>

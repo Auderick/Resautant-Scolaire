@@ -37,12 +37,36 @@ class Commande
         }
     }
 
-    public function ajouterLigneCommande($commandeId, $produit, $quantite, $unite = null, $prixUnitaire = null)
+    public function ajouterLigneCommande($commandeId, $produit, $quantite, $unite = null, $prixUnitaire = null, $isTTC = true, $tauxTVA = 20)
     {
-        $sql = "INSERT INTO lignes_commande (commande_id, produit, quantite, unite, prix_unitaire) 
-                VALUES (?, ?, ?, ?, ?)";
+        // Calcul des prix HT et TTC
+        if ($prixUnitaire !== null) {
+            if ($isTTC) {
+                $prixTTC = $prixUnitaire;
+                $prixHT = $prixUnitaire / (1 + ($tauxTVA / 100));
+            } else {
+                $prixHT = $prixUnitaire;
+                $prixTTC = $prixUnitaire * (1 + ($tauxTVA / 100));
+            }
+        } else {
+            $prixHT = null;
+            $prixTTC = null;
+        }
+
+        $sql = "INSERT INTO lignes_commande (commande_id, produit, quantite, unite, prix_unitaire, prix_ht, prix_ttc, taux_tva, is_ttc) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$commandeId, $produit, $quantite, $unite, $prixUnitaire]);
+        return $stmt->execute([
+            $commandeId,
+            $produit,
+            $quantite,
+            $unite,
+            $prixUnitaire,
+            $prixHT,
+            $prixTTC,
+            $tauxTVA,
+            $isTTC ? 1 : 0
+        ]);
     }
 
     public function getCommande($id)
@@ -161,12 +185,37 @@ class Commande
         return $stmt->execute([$id]);
     }
 
-    public function modifierLigneCommande($id, $produit, $quantite, $unite, $prixUnitaire)
+    public function modifierLigneCommande($id, $produit, $quantite, $unite, $prixUnitaire, $isTTC = true, $tauxTVA = 20)
     {
-        $sql = "UPDATE lignes_commande SET produit = ?, quantite = ?, unite = ?, prix_unitaire = ? 
+        // Calcul des prix HT et TTC
+        if ($prixUnitaire !== null) {
+            if ($isTTC) {
+                $prixTTC = $prixUnitaire;
+                $prixHT = $prixUnitaire / (1 + ($tauxTVA / 100));
+            } else {
+                $prixHT = $prixUnitaire;
+                $prixTTC = $prixUnitaire * (1 + ($tauxTVA / 100));
+            }
+        } else {
+            $prixHT = null;
+            $prixTTC = null;
+        }
+
+        $sql = "UPDATE lignes_commande 
+                SET produit = ?, quantite = ?, unite = ?, prix_unitaire = ?, prix_ht = ?, prix_ttc = ?, taux_tva = ?, is_ttc = ?
                 WHERE id = ?";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$produit, $quantite, $unite, $prixUnitaire, $id]);
+        return $stmt->execute([
+            $produit,
+            $quantite,
+            $unite,
+            $prixUnitaire,
+            $prixHT,
+            $prixTTC,
+            $tauxTVA,
+            $isTTC ? 1 : 0,
+            $id
+        ]);
     }
 
     public function getFournisseurs()
@@ -186,7 +235,6 @@ class Commande
     public function convertirEnAchats($commandeId)
     {
         try {
-
             // Récupérer les informations de la commande
             $commande = $this->getCommande($commandeId);
 
@@ -206,7 +254,6 @@ class Commande
             error_log("Données de commande pour conversion: " . json_encode($commande));
             error_log("Lignes de commande pour conversion: " . json_encode($lignes));
 
-
             // Date de l'achat = date de réception de la commande
             $dateAchat = date('Y-m-d'); // Aujourd'hui par défaut
 
@@ -224,18 +271,19 @@ class Commande
 
             // Convertir chaque ligne en achat
             foreach ($lignes as $ligne) {
-                // Calculer le montant total
-                $montantTotal = $ligne['quantite'] * $ligne['prix_unitaire'];
+                // Utiliser le prix TTC pour l'insertion dans les achats
+                $prixUnitaire = $ligne['prix_ttc'] ?? $ligne['prix_unitaire'];
+                $montantTotal = $ligne['quantite'] * $prixUnitaire;
 
                 $stmt->execute([
                     $ligne['produit'],
                     $ligne['quantite'],
                     $ligne['unite'],
-                    $ligne['prix_unitaire'],
-                    $montantTotal, // Ajout du montant total calculé
+                    $prixUnitaire,
+                    $montantTotal,
                     $dateAchat,
                     $commande['fournisseur'],
-                    $commandeId // Lier l'achat à la commande d'origine
+                    $commandeId
                 ]);
 
                 $achatsIds[] = $this->db->lastInsertId();

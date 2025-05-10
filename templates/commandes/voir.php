@@ -43,8 +43,8 @@ try {
 // Calculer le total de la commande
 $totalCommande = 0;
 foreach ($lignesCommande as $ligne) {
-    if (!empty($ligne['prix_unitaire'])) {
-        $totalCommande += $ligne['quantite'] * $ligne['prix_unitaire'];
+    if (!empty($ligne['prix_ttc'])) {
+        $totalCommande += $ligne['quantite'] * $ligne['prix_ttc'];
     }
 }
 
@@ -213,14 +213,16 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
                                     <th>Produit</th>
                                     <th class="text-center">Quantité</th>
                                     <th>Unité</th>
-                                    <th class="text-end">Prix unitaire</th>
-                                    <th class="text-end">Total</th>
+                                    <th class="text-end">Prix HT</th>
+                                    <th class="text-center">TVA</th>
+                                    <th class="text-end">Prix TTC</th>
+                                    <th class="text-end">Total TTC</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (empty($lignesCommande)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center">Aucun produit dans cette commande</td>
+                                    <td colspan="7" class="text-center">Aucun produit dans cette commande</td>
                                 </tr>
                                 <?php else: ?>
                                 <?php foreach ($lignesCommande as $ligne): ?>
@@ -233,11 +235,17 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
                                     <td><?= htmlspecialchars($ligne['unite'] ?? '') ?>
                                     </td>
                                     <td class="text-end">
-                                        <?= !empty($ligne['prix_unitaire']) ? number_format($ligne['prix_unitaire'], 2, ',', ' ') . ' €' : '-' ?>
+                                        <?= !empty($ligne['prix_ht']) ? number_format($ligne['prix_ht'], 2, ',', ' ') . ' €' : '-' ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?= number_format($ligne['taux_tva'] ?? 20, 1) ?>%
                                     </td>
                                     <td class="text-end">
-                                        <?php if (!empty($ligne['prix_unitaire'])): ?>
-                                        <?= number_format($ligne['quantite'] * $ligne['prix_unitaire'], 2, ',', ' ') ?>
+                                        <?= !empty($ligne['prix_ttc']) ? number_format($ligne['prix_ttc'], 2, ',', ' ') . ' €' : '-' ?>
+                                    </td>
+                                    <td class="text-end">
+                                        <?php if (!empty($ligne['prix_ttc'])): ?>
+                                        <?= number_format($ligne['quantite'] * $ligne['prix_ttc'], 2, ',', ' ') ?>
                                         €
                                         <?php else: ?>
                                         -
@@ -249,7 +257,7 @@ $created = isset($_GET['created']) && $_GET['created'] === '1';
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="4" class="text-end">Total</th>
+                                    <th colspan="6" class="text-end">Total TTC</th>
                                     <th class="text-end">
                                         <?= $totalFormate ?> €
                                     </th>
