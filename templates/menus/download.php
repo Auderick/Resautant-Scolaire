@@ -72,11 +72,9 @@ foreach ($menusSemaine as $menuJour) {
     // Traitement des options et allergènes
     if (is_array($menuJour['options'])) {
         $options = $menuJour['options'];
-    }
-    elseif (!empty($menuJour['options']) && is_string($menuJour['options'])) {
+    } elseif (!empty($menuJour['options']) && is_string($menuJour['options'])) {
         $options = json_decode($menuJour['options'], true);
-    }
-    elseif (!empty($menuJour['options'])) {
+    } elseif (!empty($menuJour['options'])) {
         $optionsValue = explode(',', $menuJour['options']);
         $options = ['plat' => $optionsValue];
     } else {
@@ -114,69 +112,60 @@ $html = '
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Menu - Semaine ' . $semaine['numero_semaine'] . '</title>
-    <style>
-        body {
+    <style>        body {
             font-family: "Comic Sans MS", cursive, sans-serif;
             margin: 0;
             padding: 0;
             background-color: white;
             text-align: center; /* Centre tout le contenu par défaut */
-        }
-        .menu-container {
-            max-width: 90%; /* Réduit légèrement la largeur pour un meilleur centrage */
-            margin: 0 auto; /* Centre le conteneur principal */
+            font-size: 13pt; /* Taille de police encore augmentée */
+        }        .menu-container {
+            width: 100%;
+            margin: 0 auto;
             background-color: white;
-            padding: 15px;
-        }
-        
-        .header {
+            padding: 15px 5px;
+        }          .header {
             background-color: #2b76c0;
             color: white;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
             text-align: center;
         }
-        
-        .header h1, .header p {
+          .header h1, .header p {
             color: white;
-            margin: 5px 0;
-        }
-        
-        h1 {
+            margin: 3px 0;
+        }        h1 {
             color: #70b1f2;
             text-align: center;
-            font-size: 20pt;
-            margin: 10px 0;
+            font-size: 19pt;
+            margin: 5px 0;
         }
         
         h2 {
             color: #4a90e2;
             text-align: center;
             font-size: 16pt;
-            margin: 10px 0;
+            margin: 6px 0;
         }
         
         .jour {
-            margin-bottom: 10px;
-            border: 2px solid #87ceeb;
-            border-radius: 10px;
-            padding: 5px;
-        }
-        
-        .jour-titre {
+            margin-bottom: 8px;
+            border: 1px solid #87ceeb;
+            border-radius: 8px;
+            padding: 3px;
+        }        .jour-titre {
             color: #4a90e2;
             border-bottom: 2px dashed #87ceeb;
             padding-bottom: 3px;
-            font-size: 14pt;
+            font-size: 16pt;
             font-weight: bold;
             margin-bottom: 5px;
-        }
-        
-        .plat {
-            margin: 4px auto; /* Auto pour les marges horizontales = centrage */
-            padding: 5px;
-            text-align: center; /* Centre le texte 
+        }.plat {
+            margin: 2px auto;
+            padding: 2px;
+            text-align: center;
+            font-size: 13pt;
         }
      
         .vegetarien {
@@ -187,9 +176,8 @@ $html = '
         .allergenes {
             color: #e74c3c;
             font-weight: bold;
-            display: block;
-            margin-top: 1px;
-            font-size: 9pt;
+            display: inline;
+            font-size: 8pt;
         }
         
         .legende {
@@ -198,11 +186,10 @@ $html = '
             background-color: #f5f5f5;
             border-radius: 8px;
         }
-        
-        .legende h3 {
+          .legende h3 {
             margin: 2px 0;
             color: #4a90e2;
-            font-size: 12pt;
+            font-size: 13pt;
         }
         
         .symboles {
@@ -259,10 +246,10 @@ $html = '
 
 // Parcourir chaque jour et générer son contenu
 foreach ($jours as $index => $jour) {
-    if (isset($menus[$jour]) && !empty($menus[$jour]['plat'])) {
-        // Calculer la date pour ce jour
+    if (isset($menus[$jour]) && !empty($menus[$jour]['plat'])) {        // Calculer la date pour ce jour
         $jourDate = new DateTime($semaine['date_debut']);
-        $jourDate->modify("+$index day");
+        $joursAAjouter = ($jour === 'jeudi') ? 3 : (($jour === 'vendredi') ? 4 : $index);
+        $jourDate->modify("+$joursAAjouter day");
         $dateStr = $jourDate->format('d/m');
 
         $html .= '
@@ -289,7 +276,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['entree'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-                    
+
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['entree']) && !empty($menus[$jour]['allergenes']['entree'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['entree']) . ')</span>';
@@ -324,7 +311,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['plat'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-                    
+
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['plat']) && !empty($menus[$jour]['allergenes']['plat'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['plat']) . ')</span>';
@@ -358,7 +345,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['accompagnement'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-                    
+
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['accompagnement']) && !empty($menus[$jour]['allergenes']['accompagnement'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['accompagnement']) . ')</span>';
@@ -393,7 +380,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['laitage'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-                    
+
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['laitage']) && !empty($menus[$jour]['allergenes']['laitage'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['laitage']) . ')</span>';
@@ -428,7 +415,7 @@ foreach ($jours as $index => $jour) {
                 // Traiter les allergènes
                 if (in_array('allergenes', $menus[$jour]['options']['dessert'])) {
                     $icones .= '<span class="icon-texte icon-warning">(!)</span>';
-                    
+
                     // Informations sur les allergènes
                     if (isset($menus[$jour]['allergenes']['dessert']) && !empty($menus[$jour]['allergenes']['dessert'])) {
                         $allergeneInfo = '<span class="allergenes">(Allergènes: ' . implode(', ', $menus[$jour]['allergenes']['dessert']) . ')</span>';
@@ -471,10 +458,10 @@ $html .= '
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
     'format' => 'A4',
-    'margin_top' => 10,
-    'margin_bottom' => 10,
-    'margin_left' => 10,
-    'margin_right' => 10,
+    'margin_top' => 3,
+    'margin_bottom' => 3,
+    'margin_left' => 5,
+    'margin_right' => 5,
     'default_font' => 'dejavusans'
 ]);
 

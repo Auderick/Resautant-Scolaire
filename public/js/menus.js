@@ -9,6 +9,10 @@ function imprimerMenu(id) {
         .then(response => response.json())
         .then(data => {
             const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                console.error('Impossible d\'ouvrir la fenêtre d\'impression');
+                return;
+            }
 
             // Préparer les jours et options pour affichage
             const jours = ['lundi', 'mardi', 'jeudi', 'vendredi'];
@@ -21,7 +25,9 @@ function imprimerMenu(id) {
                 if (data.menus[jour] && data.menus[jour].plat) {
                     // Calculer la date pour ce jour
                     const jourDate = new Date(data.semaine.date_debut);
-                    jourDate.setDate(jourDate.getDate() + index);
+                    // Ajout correct des jours pour jeudi et vendredi
+                    const joursAAjouter = jour === 'jeudi' ? 3 : (jour === 'vendredi' ? 4 : index);
+                    jourDate.setDate(jourDate.getDate() + joursAAjouter);
                     const dateStr = jourDate.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
 
                     let jourContenu = '';
