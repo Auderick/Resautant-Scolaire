@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Plan de nettoyage - HACCP</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 15px;
+            font-size: 9pt;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .doc-number {
+            font-size: 10pt;
+            margin-bottom: 3px;
+        }
+
+        .semaine-input {
+            margin: 8px 0;
+            font-size: 10pt;
+        }
+
+        .cleaning-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            font-size: 9pt;
+        }
+
+        .cleaning-table th,
+        .cleaning-table td {
+            border: 1px solid #000;
+            padding: 3px;
+            vertical-align: top;
+        }
+
+        .cleaning-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 8pt;
+        }
+
+        .section-header td {
+            background-color: #e0e0e0;
+            font-weight: bold;
+            text-align: left;
+            padding: 6px !important;
+        }
+
+        .surface-column { width: 12%; }
+        .frequence-column { width: 10%; }
+        .produit-column { width: 15%; }
+        .concentration-column { width: 12%; }
+        .points-column { width: 21%; }
+        .day-column { width: 6%; }
+
+        .methode {
+            border: 1px solid #000;
+            padding: 6px;
+            margin: 8px 0;
+            font-style: italic;
+            font-size: 9pt;
+            line-height: 1.2;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                window.print();
+            }, 500);
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="window.print()" class="print-button">Imprimer</button>
+
+    <div class="title">PLAN DE NETTOYAGE ET DESINFECTION</div>
+    <div class="title" style="font-size: 12pt;">Restaurant Scolaire de Leignes sur Fontaine</div>
+    
+    <div class="semaine-input">
+        SEMAINE DU _________________ AU _________________ <br>
+        ENREGISTREMENT DU NETTOYAGE (initiales de l'opérateur responsable)
+    </div>
+
+    <table class="cleaning-table">
+        <thead>
+            <tr>
+                <th class="surface-column">Surface</th>
+                <th class="frequence-column">Fréquence mini</th>
+                <th class="produit-column">Produit</th>
+                <th class="concentration-column">Concentration</th>
+                <th class="points-column">Points clefs</th>
+                <th class="day-column">LUNDI</th>
+                <th class="day-column">MARDI</th>
+                <th class="day-column">MERCREDI</th>
+                <th class="day-column">JEUDI</th>
+                <th class="day-column">VENDREDI</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- SURFACES ET ÉQUIPEMENTS GÉNÉRAUX -->
+            <tr class="section-header">
+                <td colspan="10">SURFACES ET ÉQUIPEMENTS GÉNÉRAUX</td>
+            </tr>
+            <tr>
+                <td>Sols<br>Grilles<br>Siphons</td>
+                <td>CHAQUE JOUR</td>
+                <td>Détergent / désinfectant pour surface alimentaire</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Démonter les grilles pour bien nettoyer les siphons. Ne pas laisser de résidus alimentaires dans le siphon</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Lave-mains<br>Poubelle<br>Plans de travail</td>
+                <td>CHAQUE JOUR</td>
+                <td>Détergent / désinfectant pour surface alimentaire</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Ne pas oublier les distributeurs de savon et papier</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Placards<br>Armoire à couteaux</td>
+                <td>CHAQUE SEMAINE</td>
+                <td>Détergent / désinfectant pour surface alimentaire</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Ne pas oublier le dessous des étagères</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Portes et poignées de portes<br>Murs</td>
+                <td>CHAQUE SEMAINE</td>
+                <td>Détergent / désinfectant pour surface alimentaire</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Insister surtout sur les poignées qui sont en contact fréquent avec les mains (fortement contaminées)</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Cellule de refroidissement</td>
+                <td>APRES CHAQUE UTILISATION</td>
+                <td>Détergent / désinfectant pour surface alimentaire</td>
+                <td>Selon la fiche technique produit</td>
+                <td>2 fois par an détartrer</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+
+            <!-- ÉQUIPEMENTS DE CUISSON ET VENTILATION -->
+            <tr class="section-header">
+                <td colspan="10">ÉQUIPEMENTS DE CUISSON ET VENTILATION</td>
+            </tr>
+            <tr>
+                <td>Filtres de hottes</td>
+                <td>CHAQUE SEMAINE</td>
+                <td>Dégraissant</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Démonter les filtres et les passer dans le lave-batterie</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Hottes aspirantes</td>
+                <td>TOUS LES 15 JOURS</td>
+                <td>Dégraissant</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Laisser agir, rincer et laisser sécher</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Fours et échelles de four</td>
+                <td>APRES CHAQUE UTILISATION</td>
+                <td>Dégraissant</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Ne pas dépasser la température de 60°C</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Friteuse</td>
+                <td>SELON NECESSITE</td>
+                <td>Dégraissant</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Renouveler l'huile régulièrement</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Sauteuses<br>Marmites</td>
+                <td>A CHAQUE CHANGEMENT DE PRODUIT</td>
+                <td>Détergent / désinfectant pour plonge</td>
+                <td>Selon la fiche technique produit</td>
+                <td>Nettoyer de la même façon l'intérieur et l'extérieur du matériel</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="methode">
+        <strong>Méthode :</strong><br>
+        Appliquer le produit, laisser agir, frotter si nécessaire, rincer et laisser sécher.<br>
+        Laisser agir le désinfectant au minimum 5 minutes.<br>
+        Rincer systématiquement les surfaces à l'eau claire.
+    </div>
+</body>
+</html>

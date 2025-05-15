@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Relevé des Températures - HACCP</title>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                window.print();
+            }, 500);
+        }
+    </script>    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .mois-input {
+            text-align: left;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+            margin: 0 0 10px 0;
+            font-size: 16pt;
+        }
+
+        .title p {
+            margin: 0;
+            font-size: 12pt;
+        }        .temperature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }        .temperature-table th,
+        .temperature-table td {
+            border: 1px solid #000;
+            padding: 3px;
+            text-align: center;
+            height: 18px;
+            font-size: 10pt;
+        }
+
+        .temperature-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            vertical-align: middle;
+            padding: 4px;
+            height: 20px;
+        }
+
+        .temperature-header {
+            text-align: center;
+        }
+
+        .temperature-header th {
+            padding: 4px;
+            vertical-align: middle;
+        }
+
+        .date-column {
+            width: 40px;
+        }
+
+        .temp-column {
+            width: 80px;
+        }
+
+        .non-conformite-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }        .non-conformite-table th,
+        .non-conformite-table td {
+            border: 1px solid #000;
+            padding: 4px;
+            text-align: left;
+            height: 25px;
+        }
+
+        .non-conformite-table th {
+            background-color: #f0f0f0;
+        }
+
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+        @media screen {
+            .print-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+
+            @page {
+                margin: 1cm;
+                size: A4 portrait;
+            }
+        }
+
+        @media print {
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 11pt;
+                margin: 0;
+                padding: 10px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0;
+            }
+
+            th,
+            td {
+                border: 1px solid #000;
+                padding: 4px;
+                text-align: left;
+                font-size: 10pt;
+            }
+
+            th {
+                background-color: #f0f0f0;
+            }
+
+            .header {
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .signature {
+                margin-top: 10px;
+            }
+
+            .temperature-info {
+                border: 1px solid #000;
+                padding: 5px;
+                margin: 5px 0;
+                font-size: 9pt;
+            }
+
+            @page {
+                margin: 1cm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="window.print()" class="print-button">Imprimer</button>
+
+    <div class="mois-input">
+        Relevé du mois de : _______________________
+    </div>
+
+    <div class="title">
+        <h1>RELEVÉ DES TEMPÉRATURES</h1>
+        <p>Restaurant Scolaire de Leignes sur Fontaine</p>
+    </div>
+
+    <table class="temperature-table">        <thead>
+            <tr class="temperature-header">
+                <th rowspan="2">Date</th>
+                <th colspan="2">Congélateur<br>-18°C Mini</th>
+                <th colspan="4">Armoire froide<br>+3°C Maxi</th>
+            </tr>
+            <tr>
+                <th>T° arrivée</th>
+                <th>T° départ</th>
+                <th>T° matin</th>
+                <th>T° soir</th>
+                <th>T° matin</th>
+                <th>T° soir</th>
+            </tr>
+        </thead>        <tbody>
+            <tr><td class="date-column">1</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">2</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">3</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">4</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">5</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">6</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">7</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">8</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">9</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">10</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">11</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">12</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">13</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">14</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">15</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">16</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">17</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">18</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">19</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">20</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">21</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">22</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">23</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">24</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">25</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">26</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">27</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">28</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">29</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">30</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+            <tr><td class="date-column">31</td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td><td class="temp-column"></td></tr>
+        </tbody>
+    </table>
+
+    <!-- Tableau des non-conformités -->
+    <div>
+        <h3>Gestion des non-conformités :</h3>
+        <table class="non-conformite-table">
+            <thead>
+                <tr>
+                    <th>DATE</th>
+                    <th>CONSTATATION</th>
+                    <th>ANALYSE</th>
+                    <th>ACTION(S)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 40px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 40px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="signature" style="margin-top: 30px;">
+        <p>Responsable : _________________________ Signature : _________________________</p>
+    </div>
+</body>
+
+</html>

@@ -75,6 +75,16 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </a>
         </div>
+
+        <!-- HACCP -->
+        <div class="col-md-4">
+            <a href="templates/haccp/index.php" class="card h-100 text-decoration-none">
+                <div class="card-body text-center">
+                    <h2 class="card-title">HACCP</h2>
+                    <p class="card-text">Gestion des documents HACCP</p>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
