@@ -53,9 +53,11 @@ $ventes = $vente->getListe($mois, $annee);
                     class="btn btn-outline-primary">
                     <i class="bi bi-chevron-left"></i> Mois précédent
                 </a>
-                <h2 class="mb-0">
-                    <?= formatDateToFrench("$annee-$mois-01", 'MMMM y') ?>
-                </h2>
+                <div class="d-flex align-items-center">
+                    <h2 class="mb-0">
+                        <?= formatDateToFrench("$annee-$mois-01", 'MMMM y') ?>
+                    </h2>
+                </div>
                 <a href="?mois=<?= $dateSuivante->format('m') ?>&annee=<?= $dateSuivante->format('Y') ?>"
                     class="btn btn-outline-primary">
                     Mois suivant <i class="bi bi-chevron-right"></i>
@@ -98,9 +100,15 @@ $ventes = $vente->getListe($mois, $annee);
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="card-title mb-0">Liste des ventes</h2>
-                <button class="btn btn-primary" onclick="imprimerVentes()">
-                    <i class="bi bi-printer"></i> Imprimer
-                </button>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" onclick="imprimerVentes()">
+                        <i class="bi bi-printer"></i> Imprimer
+                    </button>
+                    <a href="download.php?mois=<?= $mois ?>&annee=<?= $annee ?>"
+                        class="btn btn-success">
+                        <i class="bi bi-download"></i> Télécharger
+                    </a>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -126,7 +134,7 @@ $ventes = $vente->getListe($mois, $annee);
                                 €</td>
                             <td><?= number_format($v['nb_repas'] * $v['prix_unitaire'], 2) ?>
                                 €</td>
-                                <?php if (hasEditPermission()): ?>
+                            <?php if (hasEditPermission()): ?>
                             <td>
                                 <button class="btn btn-sm btn-warning"
                                     onclick="modifierVente(<?= $v['id'] ?>)">

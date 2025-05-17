@@ -25,11 +25,11 @@ $donnees_annee = $synthese->getSyntheseAnnuelle($annee);
         <div class="d-flex justify-content-between align-items-center">
             <?php
             $moisPrecedent = $mois == 1 ? 12 : $mois - 1;
-            $anneePrecedente = $mois == 1 ? $annee - 1 : $annee;
+$anneePrecedente = $mois == 1 ? $annee - 1 : $annee;
 
-            $moisSuivant = $mois == 12 ? 1 : $mois + 1;
-            $anneeSuivante = $mois == 12 ? $annee + 1 : $annee;
-            ?>
+$moisSuivant = $mois == 12 ? 1 : $mois + 1;
+$anneeSuivante = $mois == 12 ? $annee + 1 : $annee;
+?>
 
             <a href="?mois=<?= $moisPrecedent ?>&annee=<?= $anneePrecedente ?>"
                 class="btn btn-outline-primary">
@@ -49,11 +49,19 @@ $donnees_annee = $synthese->getSyntheseAnnuelle($annee);
     <!-- Synthèse Mensuelle -->
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-        <h2><?= formatDateToFrench("$annee-$mois-01", 'MMMM y') ?></h2>
-        <button class="btn btn-sm btn-primary" onclick="imprimerSyntheseMensuelle(<?= $mois ?>, <?= $annee ?>)">
-            <i class="bi bi-printer"></i> Imprimer
-        </button>
-    </div>
+            <h2><?= formatDateToFrench("$annee-$mois-01", 'MMMM y') ?>
+            </h2>
+            <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-primary"
+                    onclick="imprimerSyntheseMensuelle(<?= $mois ?>, <?= $annee ?>)">
+                    <i class="bi bi-printer"></i> Imprimer
+                </button>
+                <a href="download.php?mois=<?= $mois ?>&annee=<?= $annee ?>"
+                    class="btn btn-sm btn-success">
+                    <i class="bi bi-download"></i> Télécharger
+                </a>
+            </div>
+        </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4">
@@ -125,11 +133,12 @@ $donnees_annee = $synthese->getSyntheseAnnuelle($annee);
     <!-- Synthèse Annuelle -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-        <h2>Synthèse Annuelle <?= $annee ?></h2>
-        <button class="btn btn-sm btn-primary" onclick="imprimerSyntheseAnnuelle(<?= $annee ?>)">
-            <i class="bi bi-printer"></i> Imprimer
-        </button>
-    </div>
+            <h2>Synthèse Annuelle <?= $annee ?></h2>
+            <button class="btn btn-sm btn-primary"
+                onclick="imprimerSyntheseAnnuelle(<?= $annee ?>)">
+                <i class="bi bi-printer"></i> Imprimer
+            </button>
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>

@@ -4,7 +4,12 @@ require_once __DIR__ . '/../../includes/auth_check.php';
 ?>
 
 <div class="container">
-    <h1 class="text-center mb-4">Gestion HACCP</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Gestion HACCP</h1>
+        <a href="aide.php" class="btn btn-info">
+            <i class="fas fa-question-circle"></i> Guide d'utilisation
+        </a>
+    </div>
 
     <?php if (isset($_SESSION['success_message'])): ?>
     <div class="alert alert-success">
@@ -28,7 +33,7 @@ require_once __DIR__ . '/../../includes/auth_check.php';
         <h4>Comment utiliser le système HACCP ?</h4>
         <ol>
             <li><strong>Modèles de documents :</strong>
-                <div class="alert alert-info">
+                <div class="alert alert-info mt-0">
                     <h6 class="mb-0"><i class="fas fa-info-circle"></i> Comment utiliser les modèles :</h6>
                     <ol class="mb-0 small">
                         <li>Cliquez sur "Ouvrir pour imprimer"</li>
@@ -148,14 +153,16 @@ require_once __DIR__ . '/../../includes/auth_check.php';
                 </div>
             </div>
         </div>
-    </div> <!-- Liste des documents -->
+    </div>
+
+    <!-- Liste des documents -->
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Documents HACCP enregistrés</h5>
 
             <!-- Filtres -->
             <div class="row mb-3 align-items-end">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="filterCategory" class="form-label">Filtrer par catégorie :</label>
                     <select class="form-select" id="filterCategory">
                         <option value="">Toutes les catégories</option>
@@ -166,14 +173,13 @@ require_once __DIR__ . '/../../includes/auth_check.php';
                         <option value="tracabilite">Traçabilité</option>
                         <option value="autres">Autres documents</option>
                     </select>
-                </div>
-                <div class="col-md-4">
+                </div>                <div class="col-md-4">
                     <label for="filterDate" class="form-label">Filtrer par date :</label>
                     <input type="month" class="form-control" id="filterDate">
                 </div>
                 <div class="col-md-4">
-                    <button class="btn btn-outline-secondary" onclick="loadDocuments()">
-                        <i class="fas fa-sync-alt"></i> Actualiser la liste
+                    <button class="btn btn-success" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Exporter en Excel
                     </button>
                 </div>
             </div>
@@ -213,100 +219,115 @@ require_once __DIR__ . '/../../includes/auth_check.php';
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+<script>    document.addEventListener('DOMContentLoaded', function() {
         // Chargement initial des documents
         loadDocuments();
 
-        // Gestionnaire des filtres
-        document.getElementById('filterCategory').addEventListener('change', loadDocuments);
-        document.getElementById('filterDate').addEventListener('change', loadDocuments);
+        // Gestionnaire des filtres (utiliser les derniers éléments avec ces IDs)
+        const filters = document.querySelectorAll('.card:last-of-type #filterCategory, .card:last-of-type #filterDate');
+        filters.forEach(filter => {
+            filter.addEventListener('change', loadDocuments);
+        });
+    });
 
-        function loadDocuments() {
-            const category = document.getElementById('filterCategory').value;
-            const date = document.getElementById('filterDate').value; // Appel AJAX pour charger les documents
-            fetch(`list_documents.php?category=${category}&date=${date}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Documents reçus:', data); // Pour le débogage
-                    const tbody = document.getElementById('documentsTable');
-                    tbody.innerHTML = '';
+    function exportToExcel() {
+        const category = document.getElementById('filterCategory').value;
+        const date = document.getElementById('filterDate').value;
+        window.location.href = `export_excel.php?category=${category}&month=${date}`;
+    }    function loadDocuments() {
+        // Récupérer les filtres du tableau principal (dernier dans la page)
+        const categoryFilter = document.querySelector('.card:last-of-type #filterCategory');
+        const dateFilter = document.querySelector('.card:last-of-type #filterDate');
+        
+        if (!categoryFilter || !dateFilter) {
+            console.error('Filtres non trouvés');
+            return;
+        }
 
-                    data.forEach(doc => {
-                        const tr = document.createElement('tr');
-                        const docPath = encodeURI(doc.path);
-                        tr.innerHTML = `
-                        <td>${doc.name}</td>
-                        <td>${doc.category}</td>
-                        <td>${doc.date}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary preview-btn" data-path="${docPath}" title="Prévisualiser">
-                                <i class="fas fa-eye"></i> Voir
-                            </button>
-                            <a href="${docPath}" class="btn btn-sm btn-success" download title="Télécharger">
-                                <i class="fas fa-download"></i> Télécharger
-                            </a>
-                            <button class="btn btn-sm btn-danger delete-btn" data-id="${doc.id}" title="Supprimer">
-                                <i class="fas fa-trash"></i> Supprimer
-                            </button>
-                        </td>
-                    `;
-                        tbody.appendChild(tr);
+        const category = categoryFilter.value;
+        const date = dateFilter.value;
+        
+        fetch(`list_documents.php?category=${category}&date=${date}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Documents reçus:', data); // Pour le débogage
+                const tbody = document.getElementById('documentsTable');
+                tbody.innerHTML = '';
+
+                data.forEach(doc => {
+                    const tr = document.createElement('tr');
+                    const docPath = encodeURI(doc.path);
+                    tr.innerHTML = `
+                    <td>${doc.name}</td>
+                    <td>${doc.category}</td>
+                    <td>${doc.date}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary preview-btn" data-path="${docPath}" title="Prévisualiser">
+                            <i class="fas fa-eye"></i> Voir
+                        </button>
+                        <a href="${docPath}" class="btn btn-sm btn-success" download title="Télécharger">
+                            <i class="fas fa-download"></i> Télécharger
+                        </a>
+                        <button class="btn btn-sm btn-danger delete-btn" data-id="${doc.id}" title="Supprimer">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                `;
+                    tbody.appendChild(tr);
+                });
+
+                // Gestionnaire de prévisualisation
+                document.querySelectorAll('.preview-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const path = this.dataset.path;
+                        document.getElementById('previewFrame').src = path;
+                        new bootstrap.Modal(document.getElementById('previewModal'))
+                            .show();
                     });
+                }); // Gestionnaire de suppression
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (confirm('Voulez-vous vraiment supprimer ce document ?')) {
+                            const id = this.dataset.id;
 
-                    // Gestionnaire de prévisualisation
-                    document.querySelectorAll('.preview-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const path = this.dataset.path;
-                            document.getElementById('previewFrame').src = path;
-                            new bootstrap.Modal(document.getElementById('previewModal'))
-                                .show();
-                        });
-                    }); // Gestionnaire de suppression
-                    document.querySelectorAll('.delete-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            if (confirm('Voulez-vous vraiment supprimer ce document ?')) {
-                                const id = this.dataset.id;
+                            const formData = new FormData();
+                            formData.append('_method', 'DELETE');
 
-                                const formData = new FormData();
-                                formData.append('_method', 'DELETE');
-
-                                fetch(`delete_document.php?id=${id}`, {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error(
-                                                'Erreur lors de la suppression');
-                                        }
-                                        return response.json();
-                                    })
-                                    .then(data => {
-                                        if (data.success) {
-                                            loadDocuments();
-                                        } else {
-                                            alert(data.error ||
-                                                'Erreur lors de la suppression');
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error('Erreur:', error);
-                                        alert(
-                                            'Erreur lors de la suppression du document'
-                                            );
-                                    });
-                            }
-                        });
+                            fetch(`delete_document.php?id=${id}`, {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(
+                                            'Erreur lors de la suppression');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.success) {
+                                        loadDocuments();
+                                    } else {
+                                        alert(data.error ||
+                                            'Erreur lors de la suppression');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erreur:', error);
+                                    alert(
+                                        'Erreur lors de la suppression du document'
+                                    );
+                                });
+                        }
                     });
                 });
-        }
-    });
+            });
+    }
 </script>
 
 <?php require_once __DIR__ . '/../../includes/footer.php'; ?>

@@ -112,107 +112,105 @@ $html = '
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Menu - Semaine ' . $semaine['numero_semaine'] . '</title>
-    <style>        body {
+    <style>
+        body {
             font-family: "Comic Sans MS", cursive, sans-serif;
             margin: 0;
             padding: 0;
             background-color: white;
-            text-align: center; /* Centre tout le contenu par défaut */
-            font-size: 13pt; /* Taille de police encore augmentée */
-        }        .menu-container {
+            text-align: center;
+            font-size: 13pt;
+        }
+        .menu-container {
             width: 100%;
             margin: 0 auto;
             background-color: white;
-            padding: 15px 5px;
-        }          .header {
+            padding: 5px 5px;
+        }
+        .header {
             background-color: #2b76c0;
             color: white;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-align: center;
         }
-          .header h1, .header p {
+        .header h1, .header p {
             color: white;
-            margin: 3px 0;
-        }        h1 {
+            margin: 2px 0;
+        }
+        h1 {
             color: #70b1f2;
             text-align: center;
-            font-size: 19pt;
-            margin: 5px 0;
+            font-size: 20pt;
+            margin: 4px 0;
         }
-        
         h2 {
             color: #4a90e2;
             text-align: center;
             font-size: 16pt;
-            margin: 6px 0;
+            margin: 4px 0;
         }
-        
         .jour {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             border: 1px solid #87ceeb;
             border-radius: 8px;
-            padding: 3px;
-        }        .jour-titre {
+            padding: 4px;
+        }
+        .jour-titre {
             color: #4a90e2;
-            border-bottom: 2px dashed #87ceeb;
+            border-bottom: 1px dashed #87ceeb;
             padding-bottom: 3px;
-            font-size: 16pt;
+            font-size: 15pt;
             font-weight: bold;
             margin-bottom: 5px;
-        }.plat {
-            margin: 2px auto;
+        }
+        .plat {
+            margin: 3px auto;
             padding: 2px;
             text-align: center;
             font-size: 13pt;
         }
-     
         .vegetarien {
             color: #27ae60;
             font-style: italic;
         }
-        
         .allergenes {
             color: #e74c3c;
             font-weight: bold;
             display: inline;
-            font-size: 8pt;
+            font-size: 9pt;
         }
-        
         .legende {
-            margin-top: 5px;
+            margin-top: 8px;
             padding: 5px;
             background-color: #f5f5f5;
-            border-radius: 8px;
+            border-radius: 6px;
         }
-          .legende h3 {
+        .legende h3 {
             margin: 2px 0;
             color: #4a90e2;
             font-size: 13pt;
         }
-        
         .symboles {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
         }
-        
         .symboles span {
             background-color: white;
             padding: 5px 10px;
-            border-radius: 5px;
-            margin: 5px;
+            border-radius: 4px;
+            margin: 3px;
+            font-size: 12pt;
         }
-        
         .note {
             text-align: center;
             font-style: italic;
-            margin-top: 20px;
-            font-size: 10pt;
+            margin-top: 10px;
+            font-size: 11pt;
         }
-        
         .icon-texte {
             display: inline-block;
             font-weight: bold;
@@ -458,10 +456,10 @@ $html .= '
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
     'format' => 'A4',
-    'margin_top' => 3,
-    'margin_bottom' => 3,
-    'margin_left' => 5,
-    'margin_right' => 5,
+    'margin_top' => 0,
+    'margin_bottom' => 2,
+    'margin_left' => 3,
+    'margin_right' => 3,
     'default_font' => 'dejavusans'
 ]);
 
