@@ -84,6 +84,9 @@ if (!in_array($current_file, $auth_pages)) {
                         <li class="nav-item">
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/syntheses/">Synthèse</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/haccp/">HACCP</a>
+                        </li>
                         <!-- Lien de gestion des utilisateurs uniquement pour les administrateurs -->
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                         <li class="nav-item">

@@ -43,6 +43,15 @@ Le Système de Gestion de Restaurant Scolaire est une application web complète 
 - Planification des menus hebdomadaires
 - Publication automatique pour les parents
 - Gestion des allergènes
+ 
+### 8. Gestion HACCP
+- Création et gestion des documents HACCP
+- Générateur de fiches de traçabilité personnalisables
+- Archivage automatique des documents
+- Export des fiches au format Excel
+- Système de classement par type de document
+- Rappel des tâches HACCP à effectuer
+- Conservation de l'historique des contrôles
 
 ## Aspects techniques
 
