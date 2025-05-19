@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Refroidissement et remise en température - HACCP</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 15px;
+            font-size: 9pt;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .month-input {
+            margin: 8px 0;
+            font-size: 10pt;
+        }
+
+        .info-box {
+            border: 1px solid #000;
+            padding: 6px;
+            margin: 8px 0;
+            font-style: italic;
+            font-size: 9pt;
+            line-height: 1.2;
+        }
+
+        .temperature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            font-size: 9pt;
+        }
+
+        .temperature-table th,
+        .temperature-table td {
+            border: 1px solid #000;
+            padding: 3px;
+            vertical-align: middle;
+            height: 20px;
+            text-align: center;
+        }
+
+        .temperature-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        .section-header td {
+            background-color: #e0e0e0;
+            font-weight: bold;
+            text-align: left;
+            padding: 6px !important;
+        }
+
+        .date-column {
+            width: 8%;
+        }
+
+        .product-column {
+            width: 15%;
+        }
+
+        .hour-column {
+            width: 7%;
+        }
+
+        .temp-column {
+            width: 7%;
+        }
+
+        .remarks-column {
+            width: 12%;
+        }
+
+        .actions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 9pt;
+        }
+
+        .actions-table th,
+        .actions-table td {
+            border: 1px solid #000;
+            padding: 4px;
+            vertical-align: top;
+        }
+
+        .actions-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+            width: 33.33%;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                window.print();
+            }, 500);
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="window.print()" class="print-button">Imprimer</button>
+
+    <div class="title">SUIVI DU REFROIDISSEMENT ET DE LA REMISE EN TEMPÉRATURE</div>
+    <div class="title" style="font-size: 12pt;">Restaurant Scolaire de Leignes sur Fontaine</div>
+
+    <div class="month-input">
+        MOIS / ANNÉE : ________________________
+    </div>
+
+    <div class="info-box">
+        <strong>Rappel des normes :</strong><br>
+        • Le refroidissement : moins de 2 heures pour passer de +63°C à moins de +10°C à cœur<br>
+        • La remise en température : passage de +10°C à +63°C en moins d'1 heure (ne doit être réalisée qu'une seule
+        fois)
+    </div>
+
+    <table class="temperature-table">
+        <thead>
+            <tr>
+                <th rowspan="2" class="date-column">DATE</th>
+                <th rowspan="2" class="product-column">PRODUIT</th>
+                <th colspan="6">REFROIDISSEMENT</th>
+                <th colspan="5">REMISE EN TEMPÉRATURE</th>
+                <th rowspan="2" class="remarks-column">REMARQUES</th>
+            </tr>
+            <tr>
+                <th class="hour-column">Heure<br>Fin<br>cuisson</th>
+                <th class="temp-column">T°C</th>
+                <th class="hour-column">Heure<br>Début<br>refroid.</th>
+                <th class="temp-column">T°C</th>
+                <th class="hour-column">Heure<br>Fin<br>refroid.</th>
+                <th class="temp-column">T°C</th>
+                <th class="date-column">DATE</th>
+                <th class="hour-column">Heure<br>Début</th>
+                <th class="temp-column">T°C</th>
+                <th class="hour-column">Heure<br>Fin</th>
+                <th class="temp-column">T°C</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 15 lignes pour les entrées -->
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="actions-table">
+        <thead>
+            <tr>
+                <th>DATE</th>
+                <th>CONSTATATION</th>
+                <th>ACTION(S) CORRECTIVE(S)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
