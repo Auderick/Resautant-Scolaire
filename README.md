@@ -76,7 +76,7 @@ L'application inclut un système de sauvegarde automatique qui :
 
 1. **Sauvegarde la base de données**
 
-   - Dump quotidien de la base MySQL
+   - Dump hebdomadaire de la base MySQL (chaque vendredi à 20h00)
    - Compression automatique des fichiers SQL
    - Conservation des sauvegardes pendant 30 jours
 
@@ -109,7 +109,7 @@ L'application inclut un système de sauvegarde automatique qui :
    # Ouvrir le Planificateur de tâches (taskschd.msc)
    # Créer une nouvelle tâche :
    # - Nom : "Sauvegarde Restaurant Scolaire"
-   # - Déclencheur : Tous les jours à 8h00
+   # - Déclencheur : Tous les vendredis à 20h00
    # - Action : powershell.exe
    # - Arguments : -NoProfile -ExecutionPolicy Bypass -File "C:\MAMP\htdocs\compte_restaurant_scolaire\scripts\sauvegarde_auto.ps1"
    ```
