@@ -1,96 +1,162 @@
-# Présentation du Système de Gestion de Restaurant Scolaire
+# Système de Gestion de Restaurant Scolaire
 
-## Introduction
+## À propos
 
-Le Système de Gestion de Restaurant Scolaire est une application web complète développée pour répondre aux besoins du restaurant scolaire de Leignes-sur-Fontaine. Cette solution intégrée permet de gérer l'ensemble des opérations quotidiennes du restaurant, de la vente des repas à la gestion des stocks, en passant par les commandes fournisseurs.
+Application web de gestion complète développée pour le restaurant scolaire de Leignes-sur-Fontaine. Cette solution permet la gestion des présences, des ventes de repas, des stocks, et des commandes fournisseurs.
 
-## Fonctionnalités principales
+## Technologies utilisées
 
-### 1. Gestion des ventes
+- PHP 8.2 avec architecture MVC
+- Base de données MySQL
+- Interface responsive (Bootstrap)
+- Exports PDF (mPDF)
+- Sécurité : protection contre les injections SQL et XSS
+- Sauvegarde automatique hebdomadaire
 
+## Fonctionnalités détaillées
+
+### 1. Gestion des présences
+- Suivi quotidien des présences par catégorie (CM2, CE2-CM1, etc.)
+- Récapitulatif mensuel avec statistiques
+- Impression des listes de présence personnalisables
+- Interface intuitive de saisie des présences
+- Export des données au format Excel/PDF
+- Historique complet des présences
+
+### 2. Gestion des ventes
 - Enregistrement des repas vendus quotidiennement
-- Suivi par type de repas (enfant)
-
-### 2. Gestion des achats
-
-- Enregistrement détaillé des dépenses
-- Catégorisation des achats
-- Suivi budgétaire
-- Historique complet des transactions
+- Suivi détaillé par type de repas (enfant, adulte)
+- Statistiques de vente avancées
+- Génération automatique des factures
+- Suivi des paiements
+- Historique des transactions
 
 ### 3. Gestion des stocks
-
 - Inventaire en temps réel des produits
-- Suivi des mouvements de stock
-- Alertes de niveau bas
+- Système d'alertes paramétrable :
+  - Niveau bas de stock
+  - Dates de péremption
+  - Ruptures prévisionnelles
+- Suivi détaillé des mouvements de stock
 - Suggestions de réapprovisionnement
+- Gestion des fournisseurs préférés
+- Historique complet des mouvements
 
 ### 4. Commandes fournisseurs
-
 - Création de bons de commande professionnels
-- Impression et export PDF
-- Suivi des statuts de commande
-- Historique des commandes par fournisseur
+- Export automatique en PDF
+- Modèles personnalisables
+- Suivi du statut des commandes :
+  - En attente
+  - Validée
+  - En cours de livraison
+  - Réceptionnée
+- Historique détaillé par fournisseur
+- Gestion des prix et des remises
 
 ### 5. Synthèses et rapports
-
 - Tableaux de bord interactifs
-- Analyses financières mensuelles et annuelles
+- Analyses financières détaillées :
+  - Coûts par repas
+  - Marges par produit
+  - Évolution des dépenses
 - Rapports personnalisables
-- Exports pour la comptabilité
+- Exports comptables automatisés
+- Statistiques mensuelles et annuelles
 
-### 6. Gestion des utilisateurs
+### 6. Gestion des menus
+- Planification hebdomadaire des menus
+- Gestion avancée des allergènes
+- Calcul automatique des valeurs nutritionnelles
+- Publication automatique sur le site web
+- Rotation intelligente des menus
+- Gestion des régimes spéciaux
 
-- Contrôle d'accès par rôles (administrateur, utilisateur)
-- Authentification sécurisée
-- Traçabilité des actions
-
-### 7. Gestion des menus
-
-- Planification des menus hebdomadaires
-- Publication automatique pour les parents
-- Gestion des allergènes
-
-### 8. Gestion HACCP
-
+### 7. HACCP
 - Création et gestion des documents HACCP
-- Générateur de fiches de traçabilité personnalisables
-- Archivage automatique des documents
+- Modèles de documents personnalisables
+- Système de suivi des tâches :
+  - Contrôles de température
+  - Nettoyage
+  - Maintenance
 - Export des fiches au format Excel
-- Système de classement par type de document
-- Rappel des tâches HACCP à effectuer
+- Système de classement intelligent
+- Rappels automatiques des tâches
+- Archivage sécurisé des documents
 - Conservation de l'historique des contrôles
 
-## Aspects techniques
+## Configuration technique détaillée
 
-- Développé en PHP 8.2 avec architecture MVC
-- Base de données MySQL optimisée
-- Interface responsive compatible mobile
-- Export de documents au format PDF
-- Sécurité renforcée contre les injections SQL et XSS
-- Système de sauvegarde automatique
+### Prérequis système
+- MAMP avec MySQL 5.7+
+- PHP 8.2 minimum avec extensions :
+  - PDO MySQL
+  - GD
+  - ZIP
+  - mbstring
+- PowerShell Windows 5.1+
+- Droits administrateur Windows
+- 2 Go d'espace disque minimum
 
-### Système de sauvegarde automatique
+### Installation complète
 
-L'application inclut un système de sauvegarde automatique qui :
+1. **Préparation**
+   ```powershell
+   # Cloner le dépôt
+   git clone https://github.com/webtransform/compte_restaurant_scolaire.git C:\MAMP\htdocs\compte_restaurant_scolaire
+   ```
 
-1. **Sauvegarde la base de données**
+2. **Configuration de la base de données**
+   ```powershell
+   # Copier le fichier de configuration
+   Copy-Item C:\MAMP\htdocs\compte_restaurant_scolaire\config\database.example.php C:\MAMP\htdocs\compte_restaurant_scolaire\config\database.php
+   
+   # Éditer database.php avec vos paramètres
+   notepad C:\MAMP\htdocs\compte_restaurant_scolaire\config\database.php
+   ```
 
-   - Dump hebdomadaire de la base MySQL (chaque vendredi à 20h00)
-   - Compression automatique des fichiers SQL
-   - Conservation des sauvegardes pendant 30 jours
+3. **Import de la base de données**
+   ```powershell
+   # Via phpMyAdmin ou en ligne de commande
+   mysql -u root -p restaurant_scolaire < C:\MAMP\htdocs\compte_restaurant_scolaire\compte_restaurant_scolaire.sql
+   ```
+
+4. **Permissions des dossiers**
+   ```powershell
+   # Configurer les permissions
+   icacls "C:\MAMP\htdocs\compte_restaurant_scolaire\backups" /grant "IIS_IUSRS:(OI)(CI)M"
+   icacls "C:\MAMP\htdocs\compte_restaurant_scolaire\logs" /grant "IIS_IUSRS:(OI)(CI)M"
+   ```
+
+### Système de sauvegarde
+
+Le système effectue automatiquement :
+
+1. **Sauvegarde de la base de données**
+   - Dump complet chaque vendredi à 20h00
+   - Compression automatique en ZIP
+   - Rotation des fichiers après 30 jours
 
 2. **Sauvegarde des fichiers critiques**
-
-   - Documents HACCP (documents, templates, archives)
+   - Documents HACCP
    - Menus hebdomadaires
    - Bons de commande
-   - Documents stocks et synthèses
-   - Documents achats et ventes
-   - Fichiers de configuration
-   - Code source essentiel
+   - Configuration système
+   - Logs d'application
 
-3. **Configuration requise**
+3. **Structure des sauvegardes**
+   ```
+   backups/
+   ├── database/     # Dumps SQL compressés
+   ├── files/        # Archives des documents
+   └── logs/         # Journaux de backup
+   ```
+
+4. **Sécurité**
+   - Vérification automatique de l'intégrité
+   - Surveillance de l'espace disque
+   - Logs détaillés des opérations
+   - Rotation automatique > 30 jours
 
    - MAMP installé avec MySQL
    - PowerShell Windows
@@ -167,33 +233,25 @@ L'application inclut un système de sauvegarde automatique qui :
    - Faites une copie de sécurité avant la restauration
    - Redémarrez MAMP après la restauration
 
-## Démonstration
+## Scripts de maintenance
 
-La démonstration présentera les principaux flux de travail :
+1. **Tester la sauvegarde manuellement**
+   ```powershell
+   cd C:\MAMP\htdocs\compte_restaurant_scolaire\scripts
+   .\sauvegarde_auto.ps1
+   ```
 
-1. Enregistrement des ventes quotidiennes
-2. Création d'un bon de commande fournisseur
-3. Gestion des stocks et inventaire
-4. Génération de rapports de synthèse
+2. **Restaurer une sauvegarde**
+   ```powershell
+   # Remplacer YYYY-MM-DD_HH-mm par la date souhaitée
+   .\restore_backup.ps1 -BackupDate "YYYY-MM-DD_HH-mm"
+   ```
 
-## Bénéfices pour l'établissement
+## Contact & Support
 
-- Gain de temps significatif dans les tâches administratives
-- Réduction des erreurs de gestion
-- Meilleure visibilité sur les coûts et les budgets
-- Simplification du processus de commande
-- Communication facilitée avec les fournisseurs
-- Suivi précis de l'activité du restaurant
-
-## À propos du développeur
-
-Cette application a été entièrement développée par WebTransform, agence spécialisée dans le développement d'applications web sur mesure pour les collectivités et établissements publics.
-
-Pour plus d'informations ou pour une démonstration personnalisée :
-
-- Site web : [https://webtransform.fr](https://webtransform.fr)
-- Contact : contact@webtransform.fr
+Développé par WebTransform
+- [https://webtransform.fr](https://webtransform.fr)
+- contact@webtransform.fr
 
 ---
-
-© 2025 WebTransform - Tous droits réservés
+© 2025 WebTransform

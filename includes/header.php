@@ -85,6 +85,9 @@ if (!in_array($current_file, $auth_pages)) {
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/syntheses/">Synthèse</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/presences/">Présences</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/haccp/">HACCP</a>
                         </li>
                         <!-- Lien de gestion des utilisateurs uniquement pour les administrateurs -->

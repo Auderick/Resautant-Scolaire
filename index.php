@@ -66,6 +66,16 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
+        <!-- Présences -->
+        <div class="col-md-4">
+            <a href="templates/presences/index.php" class="card h-100 text-decoration-none">
+                <div class="card-body text-center">
+                    <h2 class="card-title">Présences</h2>
+                    <p class="card-text">Gérer les présences quotidiennes</p>
+                </div>
+            </a>
+        </div>
+
         <!-- Gestion des utilisateurs -->
         <div class="col-md-4">
             <a href="templates/utilisateurs/index.php" class="card h-100 text-decoration-none">
