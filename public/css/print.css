@@ -1,0 +1,82 @@
+/* Styles communs pour l'impression */
+@media print {
+
+    /* Cacher les éléments non nécessaires */
+    header,
+    footer,
+    .btn,
+    .card-header,
+    .no-print,
+    .form-check-input {
+        display: none !important;
+    }
+
+    /* Ajuster le conteneur principal */
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Style des cartes */
+    .card {
+        border: none;
+        box-shadow: none;
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    /* Titre de la page */
+    h1 {
+        font-size: 16pt;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    /* Style du tableau */
+    .table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        padding: 5px;
+        border: 1px solid #000;
+    }
+
+    /* Styles pour les grilles de jours */
+    .jours-present li,
+    .jours-absent li {
+        border: 1px solid #999;
+    }
+
+    /* En-tête et pied de page */
+    .print-header,
+    .print-footer {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .print-title {
+        font-size: 16pt;
+        margin-bottom: 10px;
+    }
+
+    .print-subtitle {
+        font-size: 12pt;
+        margin-bottom: 20px;
+    }
+
+    /* Gestion des sauts de page */
+    tr {
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+}

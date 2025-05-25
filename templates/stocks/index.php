@@ -2,6 +2,7 @@
 setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
 date_default_timezone_set('Europe/Paris');
 
+require_once __DIR__ . '/../../includes/debug.php'; // Ajout du fichier de débogage
 require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../src/Models/stock.php';
@@ -22,9 +23,15 @@ $dateSuivante->modify('+1 month');
 // Traitement des actions
 
 // Remplacer la section de traitement des actions
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && hasEditPermission()) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!hasEditPermission()) {
+        die("Erreur : Vous n'avez pas la permission d'effectuer cette action");
+    }
     if (isset($_POST['action'])) {
         try {
+            // Log des données reçues
+            error_log("Action reçue : " . $_POST['action']);
+            error_log("Données POST : " . print_r($_POST, true));
             switch ($_POST['action']) {
                 case 'ajouter':
                     $date_mouvement = !empty($_POST['date_mouvement'])

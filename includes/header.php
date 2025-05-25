@@ -42,7 +42,8 @@ if (!in_array($current_file, $auth_pages)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Scolaire</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Changez le chemin CSS ici -->
     <link rel="stylesheet" href="/compte_restaurant_scolaire/public/css/style.css">
@@ -57,32 +58,37 @@ if (!in_array($current_file, $auth_pages)) {
     <header class="bg-primary">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="/compte_restaurant_scolaire/">Restaurant Scolaire</a>
+                <a class="navbar-brand" href="/">Restaurant Scolaire</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/">Accueil</a>
+                        <li class="nav-item"> <a class="nav-link" href="/">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/menus/">Menus</a>
+                            <a class="nav-link" href="/templates/menus/">Menus</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/commandes/">Commandes</a>
+                            <a class="nav-link" href="/templates/commandes/">Commandes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/ventes/">Ventes</a>
+                            <a class="nav-link" href="/templates/ventes/">Ventes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/achats/">Achats</a>
+                            <a class="nav-link" href="/templates/achats/">Achats</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/stocks/">Stocks</a>
+                            <a class="nav-link" href="/templates/stocks/">Stocks</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/compte_restaurant_scolaire/templates/syntheses/">Synthèse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/presences/">Présences</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/haccp/">HACCP</a>
                         </li>
                         <!-- Lien de gestion des utilisateurs uniquement pour les administrateurs -->
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
