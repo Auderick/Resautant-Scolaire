@@ -57,42 +57,62 @@ class Menu
         }
 
         return $semaine;
-    }
-
-    // Créer ou mettre à jour une semaine
+    }    // Créer ou mettre à jour une semaine
     public function saveSemaine($data)
     {
-        if (isset($data['id']) && $data['id']) {
-            // Mise à jour
-            $query = "UPDATE menus_semaines SET 
-                      numero_semaine = ?, annee = ?, date_debut = ?, date_fin = ?, active = ? 
-                      WHERE id = ?";
-            $stmt = $this->db->prepare($query);
-            $result = $stmt->execute([
-                $data['numero_semaine'],
-                $data['annee'],
-                $data['date_debut'],
-                $data['date_fin'],
-                isset($data['active']) ? 1 : 0,
-                $data['id']
-            ]);
+        try {
+            $this->db->beginTransaction();
 
-            // Retourner l'ID existant si la mise à jour a réussi
-            return $result ? $data['id'] : false;
+            if (!empty($data['id'])) {
+                // Mise à jour
+                $query = "UPDATE menus_semaines SET numero_semaine = ?, annee = ?, date_debut = ?, date_fin = ?, active = ? WHERE id = ?";
+                $stmt = $this->db->prepare($query);
+                $result = $stmt->execute([
+                    $data['numero_semaine'],
+                    $data['annee'],
+                    $data['date_debut'],
+                    $data['date_fin'],
+                    isset($data['active']) ? 1 : 0,
+                    $data['id']
+                ]);
 
-        } else {
-            // Création
-            $query = "INSERT INTO menus_semaines (numero_semaine, annee, date_debut, date_fin, active) 
-                      VALUES (?, ?, ?, ?, ?)";
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([
-                $data['numero_semaine'],
-                $data['annee'],
-                $data['date_debut'],
-                $data['date_fin'],
-                isset($data['active']) ? 1 : 0
-            ]);
-            return $this->db->lastInsertId();
+                if (!$result) {
+                    throw new Exception("Échec de la mise à jour de la semaine");
+                }
+
+                $semaine_id = $data['id'];
+            } else {
+                // Création
+                $query = "INSERT INTO menus_semaines (numero_semaine, annee, date_debut, date_fin, active) 
+                         VALUES (?, ?, ?, ?, ?)";
+                $stmt = $this->db->prepare($query);
+                $result = $stmt->execute([
+                    $data['numero_semaine'],
+                    $data['annee'],
+                    $data['date_debut'],
+                    $data['date_fin'],
+                    isset($data['active']) ? 1 : 0
+                ]);
+
+                if (!$result) {
+                    throw new Exception("Échec de la création de la semaine");
+                }
+
+                $semaine_id = $this->db->lastInsertId();
+            }
+
+            // Sauvegarder les jours si présents
+            if (!empty($data['jours'])) {
+                foreach ($data['jours'] as $jour) {
+                    $this->saveJour($semaine_id, $jour);
+                }
+            }
+
+            $this->db->commit();
+            return $semaine_id;
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            throw $e;
         }
     }
 

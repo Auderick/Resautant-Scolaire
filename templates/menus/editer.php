@@ -1,7 +1,64 @@
 <?php
 
-require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../src/Models/menu.php';
+
+// Traitement du formulaire
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $menuModel = new Menu();
+
+    // Traitement des données de la semaine
+    $semaineData = [
+        'numero_semaine' => $_POST['numero_semaine'],
+        'annee' => $_POST['annee'],
+        'date_debut' => $_POST['date_debut'],
+        'date_fin' => $_POST['date_fin'],
+        'active' => isset($_POST['active']) ? 1 : 0
+    ];
+
+    // Ajouter l'ID seulement s'il est présent et non vide
+    if (!empty($_POST['semaine_id'])) {
+        $semaineData['id'] = $_POST['semaine_id'];
+        $editMode = true;
+    }
+
+    // Enregistrer la semaine
+    $semaineId = $menuModel->saveSemaine($semaineData);
+
+    if (empty($semaineId)) {
+        die("Erreur : Aucun ID de semaine n'a été retourné!");
+    }
+
+    // Traitement des menus pour chaque jour
+    $jours = ['lundi', 'mardi', 'jeudi', 'vendredi'];
+    foreach ($jours as $jour) {
+        if (isset($_POST['menus'][$jour]['plat']) && !empty($_POST['menus'][$jour]['plat'])) {
+            $menuData = [
+                'id' => $_POST['menus'][$jour]['id'] ?? null,
+                'semaine_id' => $semaineId,
+                'jour' => $jour,
+                'entree' => $_POST['menus'][$jour]['entree'] ?? '',
+                'plat' => $_POST['menus'][$jour]['plat'],
+                'accompagnement' => $_POST['menus'][$jour]['accompagnement'] ?? '',
+                'laitage' => $_POST['menus'][$jour]['laitage'] ?? '',
+                'dessert' => $_POST['menus'][$jour]['dessert'] ?? '',
+                'options' => $_POST['menus'][$jour]['options'] ?? [],
+                'allergenes' => $_POST['menus'][$jour]['allergenes'] ?? []
+            ];
+            $menuModel->saveMenu($menuData);
+        }
+    }
+
+    // Si la case "Activer" est cochée, désactiver les autres semaines
+    if (isset($_POST['active'])) {
+        $menuModel->setActive($semaineId);
+    }
+
+    // Redirection
+    header('Location: index.php?message=' . ($editMode ? 'Menu modifié' : 'Menu créé') . ' avec succès');
+    exit;
+}
+
+require_once __DIR__ . '/../../includes/header.php';
 
 $menuModel = new Menu();
 $editMode = false;
@@ -89,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Traitement des données de la semaine
     $semaineData = [
-        'id' => $_POST['semaine_id'] ?? null,
         'numero_semaine' => $_POST['numero_semaine'],
         'annee' => $_POST['annee'],
         'date_debut' => $_POST['date_debut'],
@@ -97,20 +153,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'active' => isset($_POST['active']) ? 1 : 0
     ];
 
-    // Avant d'appeler saveSemaine
-    echo "Données de semaine à enregistrer :";
-    var_dump($semaineData);
-
-    // Enregistrer la semaine
+    // Ajouter l'ID seulement s'il est présent et non vide
+    if (!empty($_POST['semaine_id'])) {
+        $semaineData['id'] = $_POST['semaine_id'];
+    }    // Enregistrer la semaine
     $semaineId = $menuModel->saveSemaine($semaineData);
-
-    // Après l'appel à saveSemaine
-    echo "ID de semaine retourné : " . $semaineId;
 
     // Si l'ID est vide ou null, il y a un problème avec la méthode saveSemaine
     if (empty($semaineId)) {
-        echo "Erreur : Aucun ID de semaine n'a été retourné!";
-        exit;
+        die("Erreur : Aucun ID de semaine n'a été retourné!");
     }
 
     // Traitement des menus pour chaque jour
@@ -728,4 +779,14 @@ foreach ($jours as $index => $jour):
     </form>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('jQuery version:', window.jQuery ? window.jQuery.fn.jquery : 'non chargé');
+        console.log('Select2 version:', window.jQuery ? (window.jQuery.fn.select2 ? 'chargé' : 'non chargé') :
+            'non chargé');
+    });
+</script>
+
+<!-- Script pour la gestion des allergènes -->
+<script src="/public/js/allergenes.js"></script>
 <?php require_once __DIR__ . '/../../includes/footer.php'; ?>

@@ -14,12 +14,13 @@
                     <p class="mb-0">Tous droits réservés</p>
                 </div>
             </div>
-        </div>    </footer>
+        </div>    </footer>      <!-- JavaScript Dependencies -->
+    <script src="/public/vendor/jquery/jquery-3.7.1.min.js"></script>
+    <script src="/public/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/public/vendor/select2/select2.min.js"></script>
 
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <!-- Application Scripts -->
+    <script src="/public/js/logger.js"></script>
     <script src="/public/js/ventes.js"></script>
     <script src="/public/js/syntheses.js"></script>
     <script src="/public/js/achats.js"></script>
