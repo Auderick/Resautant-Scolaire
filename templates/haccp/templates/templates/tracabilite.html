@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fiche de traçabilité - HACCP</title>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                window.print();
+            }, 500);
+        }
+    </script>
+    <style>
+        @media screen {
+            .print-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+
+            @page {
+                margin: 1cm;
+                size: A4 portrait;
+            }
+        }
+    </style>    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 10pt;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 4px;
+            text-align: left;
+            height: 18px;
+            font-size: 10pt;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            height: 22px;
+        }
+
+        .header {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 16pt;
+        }
+
+        .header p {
+            margin: 5px 0;
+            font-size: 11pt;
+        }
+
+        .signature {
+            margin-top: 15px;
+            font-size: 10pt;
+        }
+
+        /* Ajustement des largeurs de colonnes */
+        .date-column { width: 10%; }
+        .produit-column { width: 20%; }
+        .fournisseur-column { width: 15%; }
+        .lot-column { width: 12%; }
+        .dlc-column { width: 12%; }
+        .temp-column { width: 11%; }
+        .conforme-column { width: 10%; }
+        .visa-column { width: 10%; }
+    </style>
+</head>
+
+<body>
+    <button onclick="window.print()" class="print-button">Imprimer</button>
+    <div class="header">
+        <h1>Fiche de traçabilité - HACCP</h1>
+        <p>Restaurant Scolaire de Leignes sur Fontaine</p>
+        <p>Semaine du : _________________ au _________________</p>
+    </div>    <table>
+        <thead>
+            <tr>
+                <th class="date-column">Date</th>
+                <th class="produit-column">Produit</th>
+                <th class="fournisseur-column">Fournisseur</th>
+                <th class="lot-column">N° Lot</th>
+                <th class="dlc-column">DLC/DDM</th>
+                <th class="temp-column">T°C à réception</th>
+                <th class="conforme-column">Conforme</th>
+                <th class="visa-column">Visa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: center">□ Oui □ Non</td><td></td></tr>
+        </tbody>
+    </table>
+
+    <div class="signature">
+        <p>Responsable : _________________________ Signature : _________________________</p>
+    </div>
+</body>
+
+</html>
