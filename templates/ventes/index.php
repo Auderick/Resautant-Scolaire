@@ -190,7 +190,7 @@ $ventes = $vente->getListe($mois, $annee);
 <script>
     function modifierVente(id) {
         // Récupérer les données de la vente via AJAX
-        fetch(`/compte_restaurant_scolaire/api/ventes.php?id=${id}`)
+        fetch(`/api/ventes.php?id=${id}`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById('modif_id').value = data.id;

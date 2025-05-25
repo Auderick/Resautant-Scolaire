@@ -9,7 +9,7 @@ function imprimerCommande(id) {
 
     try {
         // Récupérer les données de la commande via AJAX
-        fetch(`/compte_restaurant_scolaire/api/commandes.php?id=${id}`)
+        fetch(`/api/commandes.php?id=${id}`)
             .then(response => response.json())
             .then(data => {
                 if (!data || !data.commande) {
@@ -375,5 +375,5 @@ function imprimerCommande(id) {
 // Fonction pour télécharger une commande au format PDF
 // Cette fonction redirige vers le script PHP qui génère le PDF
 function telechargerCommande(id) {
-    window.location.href = `/compte_restaurant_scolaire/templates/commandes/download.php?id=${id}`;
+    window.location.href = `/templates/commandes/download.php?id=${id}`;
 }

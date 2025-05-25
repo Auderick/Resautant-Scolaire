@@ -26,7 +26,7 @@ function modifierAchat(id) {
         // Ajouter des logs pour déboguer
         console.log("Récupération de l'achat ID:", id);
 
-        fetch(`/compte_restaurant_scolaire/api/achats.php?id=${id}`)
+        fetch(`/api/achats.php?id=${id}`)
             .then(response => {
                 console.log("Réponse de l'API reçue");
                 if (!response.ok) {

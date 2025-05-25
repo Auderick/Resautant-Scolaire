@@ -5,7 +5,7 @@
  */
 function imprimerMenu(id) {
     // Récupérer les données du menu
-    fetch(`/compte_restaurant_scolaire/api/menus.php?id=${id}`)
+    fetch(`/api/menus.php?id=${id}`)
         .then(response => response.json())
         .then(data => {
             const printWindow = window.open('', '_blank');
@@ -434,5 +434,5 @@ function getYourCSS() {
  * @param {number} id - L'identifiant de la semaine de menu à télécharger
  */
 function telechargerMenu(id) {
-    window.location.href = `/compte_restaurant_scolaire/templates/menus/download.php?id=${id}`;
+    window.location.href = `/templates/menus/download.php?id=${id}`;
 }

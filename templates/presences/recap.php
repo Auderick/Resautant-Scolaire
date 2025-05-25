@@ -8,8 +8,8 @@ require_once __DIR__ . '/../../src/Models/presence.php';
 require_once __DIR__ . '/../../auth/auth_functions.php';
 
 // Ajout du CSS d'impression et de la grille
-echo '<link rel="stylesheet" href="/compte_restaurant_scolaire/public/css/print.css">';
-echo '<link rel="stylesheet" href="/compte_restaurant_scolaire/public/css/presence-grid.css">';
+echo '<link rel="stylesheet" href="/public/css/print.css">';
+echo '<link rel="stylesheet" href="/public/css/presence-grid.css">';
 ?>
 <style>
     .jours-present,

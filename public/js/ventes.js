@@ -6,7 +6,7 @@ function modifierVente(id) {
     }
     console.log('Tentative de modification de la vente:', id);
     // Utilisation du chemin absolu depuis la racine du site
-    fetch(`/compte_restaurant_scolaire/api/ventes.php?id=${id}`)
+    fetch(`/api/ventes.php?id=${id}`)
         .then(response => {
             console.log('Statut de la réponse:', response.status);
             if (!response.ok) {

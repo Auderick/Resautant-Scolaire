@@ -1,5 +1,5 @@
 function modifierStock(id) {
-    fetch(`/compte_restaurant_scolaire/api/stocks.php?id=${id}`)
+    fetch(`/api/stocks.php?id=${id}`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('modif_id').value = data.id;

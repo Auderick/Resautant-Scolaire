@@ -8,10 +8,10 @@ require_once __DIR__ . '/../../src/Models/presence.php';
 require_once __DIR__ . '/../../auth/auth_functions.php';
 
 // Ajout du CSS d'impression
-echo '<link rel="stylesheet" href="/compte_restaurant_scolaire/public/css/print.css" media="print">';
+echo '<link rel="stylesheet" href="/public/css/print.css" media="print">';
 
 // Ajout du JavaScript des présences
-echo '<script src="/compte_restaurant_scolaire/public/js/presences.js" defer></script>';
+echo '<script src="/public/js/presences.js" defer></script>';
 
 $presence = new Presence();
 $categories = $presence->getCategories();

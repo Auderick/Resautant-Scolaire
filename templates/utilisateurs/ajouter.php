@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../src/Models/utilisateur.php';
 
 // Vérifier que l'utilisateur est admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header('Location: /compte_restaurant_scolaire/index.php');
+    header('Location: /index.php');
     exit;
 }
 
