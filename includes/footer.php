@@ -1,7 +1,7 @@
-    </main>
-    <footer class="bg-dark text-white py-4 mt-auto">
+</main>
+    <footer class="bg-dark text-white">
         <div class="container">
-            <div class="row">
+            <div class="row py-4">
                 <div class="col-md-4 text-center text-md-start">
                     <p class="mb-0">&copy; <?php echo date('Y'); ?> - Restaurant Scolaire Leignes sur Fontaine</p>
                 </div>

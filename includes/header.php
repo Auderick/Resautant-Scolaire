@@ -54,7 +54,7 @@ if (!in_array($current_file, $auth_pages)) {
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header class="bg-primary">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
@@ -82,18 +82,18 @@ if (!in_array($current_file, $auth_pages)) {
                             <a class="nav-link" href="/templates/stocks/">Stocks</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/syntheses/">Synthèse</a>
+                            <a class="nav-link" href="/templates/syntheses/">Synthèse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/presences/">Présences</a>
+                            <a class="nav-link" href="/templates/presences/">Présences</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/haccp/">HACCP</a>
+                            <a class="nav-link" href="/templates/haccp/">HACCP</a>
                         </li>
                         <!-- Lien de gestion des utilisateurs uniquement pour les administrateurs -->
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/compte_restaurant_scolaire/templates/utilisateurs/index.php">
+                            <a class="nav-link" href="/templates/utilisateurs/index.php">
                                 <i class="fas fa-users"></i> Gestion utilisateurs
                             </a>
                         </li>
@@ -105,7 +105,7 @@ if (!in_array($current_file, $auth_pages)) {
                             Bonjour,
                             <?= htmlspecialchars($_SESSION['nom_complet'] ?? $_SESSION['username']) ?>
                         </span>
-                        <a href="/compte_restaurant_scolaire/auth/logout.php" class="btn btn-outline-light btn-sm">
+                        <a href="/auth/logout.php" class="btn btn-outline-light btn-sm">
                             Déconnexion
                         </a>
                     </div>
@@ -114,4 +114,4 @@ if (!in_array($current_file, $auth_pages)) {
             </div>
         </nav>
     </header>
-    <main class="container py-4">
+    <main class="flex-grow-1 py-4">
