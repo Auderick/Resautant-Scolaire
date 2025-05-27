@@ -35,3 +35,16 @@ function formatNombre($valeur)
     return number_format($valeur, 0, ',', ' ');
 }
 
+/**
+ * Retourne le chemin de base de l'application
+ */
+function getBasePath()
+{
+    // Si nous sommes dans l'application Electron
+    if (isset($_GET['app']) && $_GET['app'] === 'electron') {
+        return '';
+    }
+
+    // Pour le développement web standard
+    return '';
+}

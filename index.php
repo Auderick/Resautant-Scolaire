@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="row justify-content-center g-4">
         <!-- Menus -->
         <div class="col-md-4">
-            <a href="templates/menus/index.php" class="card h-100 text-decoration-none" target="_blank">
+            <a href="templates/menus/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
                     <h2 class="card-title">Menus</h2>
                     <p class="card-text">Gérer les menus</p>
@@ -62,6 +62,16 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="card-body text-center">
                     <h2 class="card-title">Synthèses</h2>
                     <p class="card-text">Voir les rapports</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Présences -->
+        <div class="col-md-4">
+            <a href="templates/presences/index.php" class="card h-100 text-decoration-none">
+                <div class="card-body text-center">
+                    <h2 class="card-title">Présences</h2>
+                    <p class="card-text">Gérer les présences quotidiennes</p>
                 </div>
             </a>
         </div>

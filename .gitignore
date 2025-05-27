@@ -1,21 +1,39 @@
-# Fichiers de configuration avec informations sensibles
-config/database.php
+# Dependencies
+/node_modules
+/vendor
+/gestion_restaurant_desktop/node_modules
+/gestion_restaurant_desktop/dist
 
-# Fichiers temporaires
-*.tmp
-*.log
-
-# Dossiers
-/vendor/
-/node_modules/
-
-# Fichiers d'environnement
+# Configuration files
+/config/database.php
 .env
 *.env.local
 
-# Fichiers de cache
+# Build files
+/gestion_restaurant_desktop/build
+/gestion_restaurant_desktop/dist
+
+# Logs
+/logs/*
+!/logs/.gitkeep
+/gestion_restaurant_desktop/logs/*
+!/gestion_restaurant_desktop/logs/.gitkeep
+
+# Resources
+/gestion_restaurant_desktop/resources/mysql/data/*
+!/gestion_restaurant_desktop/resources/mysql/data/.gitkeep
+/gestion_restaurant_desktop/resources/backups/*
+!/gestion_restaurant_desktop/resources/backups/.gitkeep
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
 *.cache
 
-# Fichiers système
+# OS files
 .DS_Store
 Thumbs.db
