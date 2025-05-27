@@ -39,7 +39,7 @@ if ($type === 'jour') {
     <title>
         <?= $type === 'jour' ? 'Liste des Présences' : 'Récapitulatif Mensuel' ?>
         - <?= htmlspecialchars($nomCategorie) ?></title>
-    <link rel="stylesheet" href="/public/css/print.css">
+    <link rel="stylesheet" href="<?php echo getBasePath(); ?>/public/css/print.css">
     <style>
         body {
             font-family: Arial, sans-serif;
