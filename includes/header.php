@@ -4,6 +4,18 @@ require_once __DIR__ . '/functions.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Configuration du chemin des sessions PHP
+$sessionPath = realpath(__DIR__ . '/../tmp/php_sessions');
+if (!$sessionPath) {
+    $sessionPath = __DIR__ . '/../tmp/php_sessions';
+    if (!is_dir($sessionPath)) {
+        mkdir($sessionPath, 0777, true);
+    }
+}
+ini_set('session.save_handler', 'files');
+session_save_path($sessionPath);
+chmod($sessionPath, 0777); // S'assurer que le dossier est accessible en écriture
+
 // Démarrage de la session
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
