@@ -1,92 +1,133 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialiser Select2 pour tous les menus déroulants d'allergènes
-    $('.select-allergenes').select2({
-        width: '100%',
-        placeholder: "Sélectionnez les allergènes",
-        allowClear: true,
-        language: {
-            noResults: function () {
-                return "Aucun allergène trouvé";
-            },
-            searching: function () {
-                return "Recherche en cours...";
-            },
-            loadingMore: function () {
-                return "Chargement de résultats supplémentaires...";
-            },
-            inputTooShort: function (args) {
-                return "Veuillez entrer " + args.minimum + " caractères ou plus";
-            }
+/** @type {Window & typeof globalThis & { jQuery: any, $: any, toggleAllergenes: Function }} */
+var w = window;
+
+'use strict';
+
+// Configuration globale de Select2 pour les allergènes
+const SELECT2_CONFIG = {
+    width: '100%',
+    placeholder: "Sélectionnez les allergènes",
+    allowClear: true,
+    language: {
+        noResults: function () {
+            return "Aucun allergène trouvé";
+        },
+        searching: function () {
+            return "Recherche en cours...";
+        },
+        loadingMore: function () {
+            return "Chargement de résultats supplémentaires...";
+        },
+        inputTooShort: function (args) {
+            return "Veuillez entrer " + args.minimum + " caractères ou plus";
         }
-    });
-
-    // Script pour calculer automatiquement les dates de début et fin de semaine
-    const numeroSemaineInput = document.getElementById('numero_semaine');
-    const anneeInput = document.getElementById('annee');
-    const dateDebutInput = document.getElementById('date_debut');
-    const dateFinInput = document.getElementById('date_fin');
-
-    function updateDates() {
-        const numeroSemaine = parseInt(numeroSemaineInput.value) || 1;
-        const annee = parseInt(anneeInput.value) || new Date().getFullYear();
-
-        console.log(`Calcul des dates pour semaine ${numeroSemaine}, année ${annee}`);
-
-        // Implémentation correcte selon ISO 8601
-        // La semaine 1 est celle qui contient le premier jeudi de l'année
-        const janFourth = new Date(annee, 0, 3); // Le 3 janvier est vendredi toujours dans la semaine 1
-        const janFourthDayOfWeek = janFourth.getDay() || 7; // 0 (dimanche) devient 7
-
-        // Trouver le premier lundi de la semaine 1
-        const firstMondayOfYear = new Date(annee, 0, 4 - (janFourthDayOfWeek - 1));
-
-        // Ajouter (semaine - 1) * 7 jours pour obtenir le lundi de la semaine demandée
-        const dateDebut = new Date(firstMondayOfYear);
-        dateDebut.setDate(firstMondayOfYear.getDate() + (numeroSemaine - 1) * 7);
-
-        // Calculer la date de fin (vendredi = début + 4 jours)
-        const dateFin = new Date(dateDebut);
-        dateFin.setDate(dateDebut.getDate() + 4);
-
-        console.log(`Date de début calculée: ${dateDebut.toISOString().split('T')[0]}`);
-        console.log(`Date de fin calculée: ${dateFin.toISOString().split('T')[0]}`);
-
-        // Formater les dates pour l'input date (YYYY-MM-DD)
-        dateDebutInput.value = dateDebut.toISOString().split('T')[0];
-        dateFinInput.value = dateFin.toISOString().split('T')[0];
     }
+};
 
-    if (!dateDebutInput.value || !dateFinInput.value) {
-        updateDates();
-    }
+// Namespace pour les fonctions des allergènes
+window.GestionAllergenes = {
+    // Initialiser Select2 pour un élément
+    initSelect2: function ($select) {
+        if (!$select || !$select.length) return;
 
-    numeroSemaineInput.addEventListener('change', updateDates);
-    anneeInput.addEventListener('change', updateDates);
+        // Détruire l'instance existante si elle existe
+        if ($select.hasClass('select2-hidden-accessible')) {
+            $select.select2('destroy');
+        }
 
-    // Fonction pour afficher/masquer les détails des allergènes
-    function toggleAllergenes(detailsId) {
+        // Initialiser Select2 avec la configuration
+        $select.select2(SELECT2_CONFIG);
+    },
+
+    // Afficher/masquer les détails des allergènes
+    toggleAllergenes: function (detailsId) {
         const detailsElement = document.getElementById(detailsId);
-        if (detailsElement) {
-            detailsElement.style.display = detailsElement.style.display === 'none' ? 'block' : 'none';
+        if (!detailsElement) return;
 
-            // Rafraîchir uniquement ce select spécifique après l'affichage
-            if (detailsElement.style.display === 'block') {
-                $(detailsElement).find('.select-allergenes').select2('destroy').select2({
-                    width: '100%',
-                    placeholder: "Sélectionnez les allergènes",
-                    allowClear: true
-                });
-            }
+        // Toggle l'affichage
+        const isVisible = detailsElement.style.display !== 'none';
+        detailsElement.style.display = isVisible ? 'none' : 'block';
+
+        if (!isVisible) {
+            // Réinitialiser Select2 quand on affiche le conteneur
+            const $select = $(detailsElement).find('.select-allergenes');
+            this.initSelect2($select);
         }
+    },
+
+    // Initialiser les gestionnaires d'événements
+    init: function () {
+        if (this.initialized) return;
+        this.initialized = true;
+
+        // Initialiser Select2 pour les menus visibles
+        $('.select-allergenes').each((_, element) => {
+            const $select = $(element);
+            if ($select.closest('[id$="-allergenes-details"]').css('display') !== 'none') {
+                this.initSelect2($select);
+            }
+        });
+
+        // Gestionnaire d'événements pour les cases à cocher d'allergènes
+        $(document).on('change', 'input[value="allergenes"]', (event) => {
+            const detailsId = event.target.id + '-details';
+            this.toggleAllergenes(detailsId);
+        });
+
+        console.log('GestionAllergenes initialisé');
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier que jQuery et Select2 sont chargés
+    if (typeof jQuery === 'undefined') {
+        console.error('jQuery nest pas chargé');
+        return;
+    }
+    if (typeof jQuery.fn.select2 === 'undefined') {
+        console.error('Select2 nest pas chargé');
+        return;
     }
 
-    // Initialiser les cases à cocher allergènes
-    const allergeneCheckboxes = document.querySelectorAll('input[value="allergenes"]');
-    allergeneCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            const element = this.id;
-            const detailsId = element + '-details';
-            toggleAllergenes(detailsId);
-        });
-    });
+    window.GestionAllergenes.init();
 });
+
+// Script pour calculer automatiquement les dates de début et fin de semaine
+/** @type {HTMLInputElement} */
+var numeroSemaineInput = document.getElementById('numero_semaine');
+/** @type {HTMLInputElement} */
+var anneeInput = document.getElementById('annee');
+/** @type {HTMLInputElement} */
+var dateDebutInput = document.getElementById('date_debut');
+/** @type {HTMLInputElement} */
+var dateFinInput = document.getElementById('date_fin');
+
+function updateDates() {
+    if (!numeroSemaineInput || !anneeInput || !dateDebutInput || !dateFinInput) return;
+
+    var numeroSemaine = parseInt(numeroSemaineInput.value || '1');
+    var annee = parseInt(anneeInput.value || String(new Date().getFullYear()));
+
+    // Implémentation selon ISO 8601
+    var janFourth = new Date(annee, 0, 3);
+    var janFourthDayOfWeek = janFourth.getDay() || 7;
+    var firstMondayOfYear = new Date(annee, 0, 4 - (janFourthDayOfWeek - 1));
+    var dateDebut = new Date(firstMondayOfYear);
+    dateDebut.setDate(firstMondayOfYear.getDate() + (numeroSemaine - 1) * 7);
+    var dateFin = new Date(dateDebut);
+    dateFin.setDate(dateDebut.getDate() + 4);
+
+    dateDebutInput.value = dateDebut.toISOString().split('T')[0];
+    dateFinInput.value = dateFin.toISOString().split('T')[0];
+}
+
+if (dateDebutInput && dateFinInput && (!dateDebutInput.value || !dateFinInput.value)) {
+    updateDates();
+}
+
+if (numeroSemaineInput) {
+    numeroSemaineInput.addEventListener('change', updateDates);
+}
+if (anneeInput) {
+    anneeInput.addEventListener('change', updateDates);
+}

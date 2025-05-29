@@ -5,14 +5,22 @@ class Presence
     private $db;
     public function __construct()
     {
-        $config = require_once __DIR__ . '/../../config/database.php';
-        $this->db = new PDO(
-            "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8",
-            $config['user'],
-            $config['password'],
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
+        require_once __DIR__ . '/../../config/database.php';
+        $config = require __DIR__ . '/../../config/database.php';
+
+        try {
+            $this->db = new PDO(
+                "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8;port={$config['port']}",
+                $config['user'],
+                $config['password']
+            );
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur de connexion à la base de données : " . $e->getMessage());
+        }
     }
+
 
     public function getCategories()
     {

@@ -38,8 +38,10 @@ if ($type === 'jour') {
     <meta charset="UTF-8">
     <title>
         <?= $type === 'jour' ? 'Liste des Présences' : 'Récapitulatif Mensuel' ?>
-        - <?= htmlspecialchars($nomCategorie) ?></title>
-    <link rel="stylesheet" href="<?php echo getBasePath(); ?>/public/css/print.css">
+        - <?= htmlspecialchars($nomCategorie) ?>
+    </title>
+    <link rel="stylesheet"
+        href="<?php echo getBasePath(); ?>/public/css/print.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -203,9 +205,11 @@ if ($type === 'jour') {
                 <td><?= $createDaysTable($joursPresent) ?></td>
                 <td><?= $createDaysTable($joursAbsent) ?></td>
                 <td style="text-align: center">
-                    <?= count($joursPresent) ?></td>
+                    <?= count($joursPresent) ?>
+                </td>
                 <td style="text-align: center">
-                    <?= count($joursAbsent) ?></td>
+                    <?= count($joursAbsent) ?>
+                </td>
             </tr>
             <?php endforeach; ?>
             <?php else: // type === 'jour'?>

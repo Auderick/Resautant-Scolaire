@@ -1,4 +1,15 @@
 <?php
+// Vérifier que PHP est correctement configuré
+if (PHP_VERSION_ID < 70400) {
+    die('PHP 7.4 ou supérieur est requis');
+}
+
+if (!extension_loaded('mbstring')) {
+    error_log('Extension mbstring non chargée. PHP_INI_LOADED_FILE: ' . php_ini_loaded_file());
+    error_log('Extension dir: ' . ini_get('extension_dir'));
+    error_log('Loaded extensions: ' . implode(', ', get_loaded_extensions()));
+    die("L'extension mbstring est requise. Veuillez contacter l'administrateur système.");
+}
 
 require_once __DIR__ . '/../../src/Models/menu.php';
 require_once __DIR__ . '/../../vendor/autoload.php';

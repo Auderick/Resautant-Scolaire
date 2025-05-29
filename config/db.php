@@ -1,22 +1,8 @@
 <?php
 
-// Configuration par défaut
-$config = [
-    'host' => 'localhost',
-    'dbname' => 'gestion_restaurant_scolaire',
-    'charset' => 'utf8',
-    'user' => 'root',
-    'password' => 'root'
-];
-
-// Détection de l'environnement d'exécution
-if (isset($_GET['app']) && $_GET['app'] === 'electron') {
-    // Configuration pour l'application desktop Electron
-    $config['port'] = '3307';
-} else {
-    // Configuration pour l'environnement web (MAMP)
-    $config['port'] = '3306';
-}
+// Charger la configuration depuis database.php
+$config = require __DIR__ . '/database.php';
+$config['charset'] = 'utf8mb4';
 
 try {
     $db = new PDO(

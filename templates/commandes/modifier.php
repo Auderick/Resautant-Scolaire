@@ -56,11 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $isTTC,
                     $tauxTVA
                 );
-            }
-        }
+            }        }
 
-        header("Location: voir.php?id=$commandeId&updated=1");
-        exit;
+        $redirectUrl = "voir.php?id=$commandeId&updated=1";
+        if (!headers_sent()) {
+            header("Location: $redirectUrl");
+            exit;
+        } else {
+            echo "<script>window.location.href='$redirectUrl';</script>";
+            echo '<noscript><meta http-equiv="refresh" content="0;url=' . $redirectUrl . '"></noscript>';
+            exit;
+        }
     } catch (Exception $e) {
         $erreur = "Erreur lors de la modification de la commande: " . $e->getMessage();
     }
@@ -186,10 +192,11 @@ $fournisseurs = $commandeModel->getFournisseurs();
                                 <option value="5.5">TVA 5.5%</option>
                             </select>
                         </div>
-                        <div class="col-md-1">
-                            <select class="form-select" name="is_ttc[]"
-                                onchange="calculerPrix(this.closest('.produit-row').querySelector('[name^=prix_unitaires]'))">
-                                <option value="1">TTC</option>
+                        <div class="col-md-1"></div>
+                            <select class="form-select text-center" name="is_ttc[]"
+                                onchange="calculerPrix(this.closest('.produit-row').querySelector('[name^=prix_unitaires]'))"
+                                style="padding-right: 0.5rem; padding-left: 0.5rem; appearance: none; -webkit-appearance: none;">
+                                <option value="1" selected>TTC</option>
                                 <option value="0">HT</option>
                             </select>
                         </div>
@@ -225,21 +232,17 @@ $fournisseurs = $commandeModel->getFournisseurs();
                         <div class="col-md-2">
                             <select class="form-select" name="taux_tva[]"
                                 onchange="calculerPrix(this.closest('.produit-row').querySelector('[name^=prix_unitaires]'))">
-                                <option value="20" <?= ($ligne['taux_tva'] ?? 20) == 20 ? 'selected' : '' ?>>TVA
-                                    20%</option>
-                                <option value="10" <?= ($ligne['taux_tva'] ?? 20) == 10 ? 'selected' : '' ?>>TVA
-                                    10%</option>
-                                <option value="5.5" <?= ($ligne['taux_tva'] ?? 20) == 5.5 ? 'selected' : '' ?>>TVA
-                                    5.5%</option>
+                                <option value="20" <?= ($ligne['taux_tva'] ?? 20) == 20 ? 'selected' : '' ?>>TVA 20%</option>
+                                <option value="10" <?= ($ligne['taux_tva'] ?? 20) == 10 ? 'selected' : '' ?>>TVA 10%</option>
+                                <option value="5.5" <?= ($ligne['taux_tva'] ?? 20) == 5.5 ? 'selected' : '' ?>>TVA 5.5%</option>
                             </select>
                         </div>
                         <div class="col-md-1">
-                            <select class="form-select" name="is_ttc[]"
-                                onchange="calculerPrix(this.closest('.produit-row').querySelector('[name^=prix_unitaires]'))">
-                                <option value="1" <?= ($ligne['is_ttc'] ?? true) ? 'selected' : '' ?>>TTC
-                                </option>
-                                <option value="0" <?= !($ligne['is_ttc'] ?? true) ? 'selected' : '' ?>>HT
-                                </option>
+                            <select class="form-select text-center" name="is_ttc[]"
+                                onchange="calculerPrix(this.closest('.produit-row').querySelector('[name^=prix_unitaires]'))"
+                                style="padding-right: 0.5rem; padding-left: 0.5rem; appearance: none; -webkit-appearance: none;">
+                                <option value="1" <?= ($ligne['is_ttc'] ?? true) ? 'selected' : '' ?>>TTC</option>
+                                <option value="0" <?= !($ligne['is_ttc'] ?? true) ? 'selected' : '' ?>>HT</option>
                             </select>
                         </div>
                         <div class="col-md-1">

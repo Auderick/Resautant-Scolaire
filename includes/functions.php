@@ -2,20 +2,28 @@
 
 function formatDateToFrench($date, $format = 'MMMM y')
 {
-    $formatter = new IntlDateFormatter(
-        'fr_FR',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL,
-        'Europe/Paris',
-        IntlDateFormatter::GREGORIAN,
-        $format
-    );
+    // Tableau de correspondance des mois en français
+    static $moisFr = [
+        1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+    ];
 
     if (is_string($date)) {
         $date = new DateTime($date);
     }
 
-    return ucfirst($formatter->format($date));
+    // Format personnalisé basé sur le paramètre format
+    if ($format === 'MMMM y') {
+        $mois = $moisFr[(int)$date->format('n')];
+        $annee = $date->format('Y');
+        return ucfirst($mois . ' ' . $annee);
+    } elseif ($format === 'd MMMM y') {
+        $mois = $moisFr[(int)$date->format('n')];
+        return $date->format('d') . ' ' . $mois . ' ' . $date->format('Y');
+    } else {
+        // Format par défaut si non reconnu
+        return $date->format('d/m/Y');
+    }
 }
 
 

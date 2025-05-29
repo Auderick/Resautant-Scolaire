@@ -31,11 +31,9 @@ if (!in_array($current_file, $auth_pages)) {
     // Redirection vers la page de login si l'utilisateur n'est pas connecté
     if (!isLoggedIn() && $current_file !== 'login.php') {
         header('Location: ' . getBasePath() . '/auth/login.php' . (isset($_GET['app']) ? '?app=' . $_GET['app'] : ''));
-        exit;
-    }
+        exit;    }
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="fr">
 
 <head>

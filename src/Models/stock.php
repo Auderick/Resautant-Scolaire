@@ -10,19 +10,22 @@ class Stock
 
     public function __construct()
     {
-        $config = require_once __DIR__ . '/../../config/database.php';
+        require_once __DIR__ . '/../../config/database.php';
+        $config = require __DIR__ . '/../../config/database.php';
+
         try {
             $this->db = new PDO(
-                "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset=utf8mb4",
+                "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8;port={$config['port']}",
                 $config['user'],
-                $config['password'],
-                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4")
+                $config['password']
             );
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
+            die("Erreur de connexion à la base de données : " . $e->getMessage());
         }
     }
+
 
     public function ajouter($produit, $quantite, $prix_unitaire, $unite, $seuil_alerte = 10, $date_mouvement = null)
     {

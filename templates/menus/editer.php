@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../src/Models/menu.php';
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $menuModel = new Menu();
+    $editMode = false; // Initialisation de la variable
 
     // Traitement des données de la semaine
     $semaineData = [
