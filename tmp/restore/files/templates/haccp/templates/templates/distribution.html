@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <base target="_blank">
+    <style media="print">
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 10mm;
+            margin: 0;
+            box-sizing: border-box;
+            background-color: white;
+        }
+    </style>
+    <title>Contrôle des Températures de Distribution - HACCP</title>
+    <script>
+        window.onload = function () {
+            // Suppression de tous les pseudo-éléments after/before
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = `
+                @media print {
+                    *:after, *:before {
+                        content: none !important;
+                        display: none !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            setTimeout(function () {
+                window.print();
+            }, 500);
+        }
+        window.onbeforeprint = function () {
+            // Force la suppression des en-têtes et pieds de page
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.media = 'print';
+            style.innerHTML = '@page { margin: 1cm; size: A4 portrait; } ' +
+                '@page :first { margin-top: 0; } ' +
+                '@page :left { margin-left: 0; } ' +
+                '@page :right { margin-right: 0; }';
+            document.head.appendChild(style);
+        };
+
+        // Fonction d'impression
+        function printDocument() {
+            window.print();
+        }
+    </script>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+            margin-bottom: 0;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+
+            /* Suppression complète de l'URL en bas de page */
+            html {
+                background-color: #FFFFFF;
+                margin: 0px;
+            }
+
+            body {
+                margin: 0mm 0mm 0mm 0mm;
+                padding: 0;
+            }
+
+            /* Suppression des URLs */
+            a[href^="http"]:after,
+            a[href^="/"]:after,
+            a:after,
+            a:before,
+            body:after,
+            body:before {
+                content: "" !important;
+                content: none !important;
+                display: none !important;
+            }
+
+            /* Suppression spécifique pour Firefox */
+            @-moz-document url-prefix() {
+
+                body:after,
+                body:before {
+                    content: "" !important;
+                    display: none !important;
+                }
+            }
+
+            /* Suppression des URLs dans Chrome/Safari */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @media screen {
+            .print-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+
+            @page {
+                margin: 1cm;
+                size: A4 portrait;
+            }
+
+            /* Suppression complète de l'URL en bas de page */
+            body {
+                margin: 0;
+            }
+
+            body::after,
+            body:after,
+            body::before,
+            body:before {
+                content: none !important;
+                display: none !important;
+            }
+
+            @-moz-document url-prefix() {
+
+                body::after,
+                body:after,
+                body::before,
+                body:before {
+                    content: none !important;
+                    display: none !important;
+                }
+            }
+
+            /* Suppression des URLs dans Firefox */
+            :link:after,
+            :visited:after {
+                content: "" !important;
+            }
+
+            /* Suppression des URLs dans Chrome/Safari */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 11pt;
+        }
+
+        .title {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .doc-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 10pt;
+        }
+
+        .mois-input {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: white;
+        }
+
+        .temperature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .temperature-table th,
+        .temperature-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .temperature-table th {
+            background-color: #f0f0f0;
+        }
+
+        .temperature-info {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 10pt;
+        }
+
+        .non-conformites {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-size: 11pt;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .signature {
+            margin-top: 20px;
+        }
+
+        .info {
+            font-size: 10pt;
+            font-style: italic;
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .temperature-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+        <button onclick="window.print()" class="print-button">Imprimer</button>
+
+        <div class="mois-input">
+            <strong>Mois :</strong> _______________________
+        </div>
+        <div class="title">
+            <h1>FICHE DE CONTRÔLE DES TEMPÉRATURES PRODUITS<br>PENDANT LE SERVICE</h1>
+            <p>Restaurant Scolaire de Leignes sur Fontaine</p>
+        </div> <!-- Distribution Froide -->
+        <div class="subtitle">
+            DISTRIBUTION FROIDE - VALEUR CIBLE : + 3°C - TOLÉRANCE : + 10°C
+        </div>
+
+        <table class="temperature-table">
+            <thead>
+                <tr>
+                    <th>SEMAINE N°</th>
+                    <th>Nom du plat</th>
+                    <th>Heure</th>
+                    <th>Température (°C)</th>
+                    <th>Visa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table> <!-- Distribution Chaude -->
+        <div class="subtitle">
+            DISTRIBUTION CHAUDE - VALEUR CIBLE : + 63°C - TOLÉRANCE : + 55°C
+        </div>
+
+        <table class="temperature-table">
+            <thead>
+                <tr>
+                    <th>SEMAINE N°</th>
+                    <th>Nom du plat</th>
+                    <th>Heure</th>
+                    <th>Température (°C)</th>
+                    <th>Visa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="height: 25px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Tableau des non-conformités -->
+        <div class="non-conformites">
+            <h3>Tableau des non conformités :</h3>
+            <table class="temperature-table">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>ORIGINE DU PROBLÈME</th>
+                        <th>ACTIONS CORRECTIVES</th>
+                        <th>VISA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="height: 30px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="height: 30px;"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="info">
+            <p><strong>Note :</strong> En cas de non-conformité (T°C hors limite), prendre immédiatement les actions
+                correctives nécessaires :</p>
+            <ul>
+                <li>Plats chauds : Remise en température si < 63°C</li>
+                <li>Plats froids : Mise au froid si > 3°C</li>
+                <li>Si impossibilité de correction : Élimination du produit </li>
+            </ul>
+        </div>
+    </div> <!-- Fermeture de page-container -->
+</body>
+
+</html>

@@ -12,8 +12,9 @@ function Write-Log {
 }
 
 # Chemins des fichiers
-$backupRoot = "C:\MAMP\htdocs\compte_restaurant_scolaire\backups"
-$dbBackup = Join-Path $backupRoot "database\backup_$BackupDate.sql.zip"
+$projectRoot = (Get-Item $PSScriptRoot).Parent.FullName
+$backupRoot = Join-Path $projectRoot "backups"
+$dbBackup = Join-Path $backupRoot "database\mysql_$BackupDate.zip"
 $filesBackup = Join-Path $backupRoot "files\files_backup_$BackupDate.zip"
 $tempDir = Join-Path $backupRoot "temp"
 $restoreDir = Join-Path $backupRoot "restore"
@@ -39,11 +40,32 @@ try {
     $sqlFile = Get-ChildItem -Path $tempDir -Filter "*.sql" | Select-Object -First 1
     if (!$sqlFile) { throw "Fichier SQL non trouvé dans l'archive" }
 
-    Write-Log "Recréation de la base de données..."
-    & "C:\MAMP\bin\mysql\bin\mysql.exe" -u root -proot -e "DROP DATABASE IF EXISTS compte_restaurant_scolaire; CREATE DATABASE compte_restaurant_scolaire CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        Write-Log "Recréation de la base de données..."
+    $mysqlDir = "C:\Users\chris\Desktop\gestion_restaurant_scolaire\gestion_restaurant_desktop\resources\mysql"
+    $mysql = Join-Path $mysqlDir "bin\mysql.exe"
+    
+    # Arrêt de MySQL
+    $mysqlProcess = Get-Process "mysqld" -ErrorAction SilentlyContinue
+    if ($mysqlProcess) {
+        Write-Log "Arrêt de MySQL..."
+        $mysqlProcess | Stop-Process -Force
+        Start-Sleep -Seconds 5
+    }
 
-    Write-Log "Importation des données..."
-    Get-Content $sqlFile.FullName | & "C:\MAMP\bin\mysql\bin\mysql.exe" -u root -proot compte_restaurant_scolaire
+    # Restauration directe des fichiers de données
+    Write-Log "Restauration de la base de données..."
+    $dataDir = Join-Path $mysqlDir "data"
+    if (Test-Path $dataDir) {
+        Remove-Item -Path "$dataDir\*" -Recurse -Force
+    }
+    Copy-Item -Path "$tempDir\*" -Destination $dataDir -Recurse -Force
+
+    # Redémarrage de MySQL
+    Write-Log "Redémarrage de MySQL..."
+    $mysqld = Join-Path $mysqlDir "bin\mysqld.exe"
+    $mysqlIni = Join-Path $mysqlDir "my.ini"
+    Start-Process -FilePath $mysqld -ArgumentList "--defaults-file=$mysqlIni" -WindowStyle Hidden
+    Start-Sleep -Seconds 10
 
     # 4. Restauration des fichiers
     Write-Log "Restauration des fichiers..."
