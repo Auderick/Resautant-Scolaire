@@ -2,14 +2,15 @@
 
 function formatDateToFrench($date, $format = 'MMMM y')
 {
+    // Tableau de correspondance des mois en français
+    static $mois_fr = [
+        1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+    ];
+
     if (is_string($date)) {
         $date = new DateTime($date);
     }
-
-    $mois_fr = array(
-        1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
-    );
 
     switch ($format) {
         case 'MMMM y':
@@ -45,41 +46,66 @@ function formatNombre($valeur)
 }
 
 /**
+ * Vérifie si l'application est exécutée depuis Electron
+ */
+function isDesktopApp()
+{
+    // Vérifier d'abord dans la session
+    if (isset($_SESSION['is_desktop']) && $_SESSION['is_desktop'] === true) {
+        debug_log("Mode desktop détecté depuis la session");
+        return true;
+    }
+
+    // Vérifier le paramètre GET
+    if (isset($_GET['app']) && $_GET['app'] === 'desktop') {
+        debug_log("Mode desktop détecté depuis GET");
+        return true;
+    }
+
+    // Vérifier l'User-Agent pour Electron
+    if (isset($_SERVER['HTTP_USER_AGENT']) && (
+        strpos($_SERVER['HTTP_USER_AGENT'], 'Electron') !== false ||
+        strpos($_SERVER['HTTP_USER_AGENT'], 'RestaurantScolaireDesktop') !== false
+    )) {
+        debug_log("Mode desktop détecté depuis User-Agent: " . $_SERVER['HTTP_USER_AGENT']);
+        $_SESSION['is_desktop'] = true;
+        return true;
+    }
+
+    debug_log("Mode web détecté");
+    return false;
+}
+
+/**
  * Retourne le chemin de base de l'application
  */
 function getBasePath()
 {
-    // Détection si nous sommes dans l'app Electron
-    if (isset($_GET['app']) && $_GET['app'] === 'electron') {
-        return '.';
+    // Si nous sommes dans l'application Electron
+    if (isDesktopApp()) {
+        return '';
     }
     
-    // Pour l'environnement web
-    $scriptPath = $_SERVER['SCRIPT_NAME'];
+    // Pour l'application web
+    $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+    $basePath = str_replace('/auth', '', $scriptDir);
+    $basePath = str_replace('/includes', '', $basePath);
+    $basePath = str_replace('/templates', '', $basePath);
+    return rtrim($basePath, '/');
+}
+
+/**
+ * Génère l'URL complète avec le paramètre app=desktop si nécessaire
+ */
+function getFullUrl($path) 
+{
+    $base = getBasePath();
+    $url = $base . '/' . ltrim($path, '/');
     
-    // Chercher plusieurs dossiers possibles
-    $possiblePaths = ['/templates/', '/auth/', '/api/'];
-    
-    foreach ($possiblePaths as $path) {
-        $position = strpos($scriptPath, $path);
-        if ($position !== false) {
-            return substr($scriptPath, 0, $position);
-        }
+    if (isDesktopApp()) {
+        $separator = (strpos($url, '?') !== false) ? '&' : '?';
+        $url .= $separator . 'app=desktop';
     }
     
-    // Si aucun des dossiers n'est trouvé, retourner le dossier parent
-    $lastSlash = strrpos($scriptPath, '/');
-    return $lastSlash !== false ? substr($scriptPath, 0, $lastSlash) : '';
-    
-    $position = strpos($scriptPath, '/auth/');
-    if ($position !== false) {
-        return substr($scriptPath, 0, $position);
-    }
-    
-    $position = strpos($scriptPath, '/api/');
-    if ($position !== false) {
-        return substr($scriptPath, 0, $position);
-    }
-    
-    return dirname($scriptPath);
+    return $url;
 }

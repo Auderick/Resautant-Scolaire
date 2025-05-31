@@ -1,26 +1,47 @@
 <?php
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/../auth/auth_functions.php';  // Ajout de l'inclusion des fonctions d'authentification
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
-// Démarrage de la session
+// Création du dossier logs s'il n'existe pas
+if (!is_dir(__DIR__ . '/../logs')) {
+    mkdir(__DIR__ . '/../logs', 0777, true);
+}
+
+// Configuration de la journalisation des erreurs
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/php_error.log');
+
+// Activation du debugging détaillé
+function debug_log($message) {
+    $log_file = __DIR__ . '/../logs/debug.log';
+    $date = date('Y-m-d H:i:s');
+    file_put_contents($log_file, "[$date] $message\n", FILE_APPEND);
+}
+
+debug_log('Début du chargement header.php');
+
+// S'assurer que la session est démarrée
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Inclure les fonctions d'authentification si elles existent
-$auth_functions_file = __DIR__ . '/../auth/auth_functions.php';
-if (file_exists($auth_functions_file)) {
-    require_once $auth_functions_file;
+// Journaliser les informations de l'environnement
+debug_log("User Agent: " . ($_SERVER['HTTP_USER_AGENT'] ?? 'Non défini'));
+debug_log("Session ID: " . session_id());
+debug_log("Session data: " . print_r($_SESSION, true));
+debug_log("GET params: " . print_r($_GET, true));
+
+// Détecter le mode desktop
+$isDesktop = isDesktopApp();
+if ($isDesktop) {
+    $_SESSION['is_desktop'] = true;
+    debug_log("Application en mode desktop");
 } else {
-    // Fonction temporaire uniquement si les fonctions d'auth ne sont pas disponibles
-    if (!function_exists('isLoggedIn')) {
-        function isLoggedIn()
-        {
-            return isset($_SESSION['user_id']);
-        }
-    }
+    debug_log("Application en mode web");
 }
 
 // Vérification d'authentification (sauf pour les pages d'auth)
@@ -28,10 +49,21 @@ $current_file = basename($_SERVER['SCRIPT_NAME']);
 $auth_pages = ['login.php', 'logout.php'];
 
 if (!in_array($current_file, $auth_pages)) {
-    // Redirection vers la page de login si l'utilisateur n'est pas connecté
-    if (!isLoggedIn() && $current_file !== 'login.php') {
-        header('Location: ' . getBasePath() . '/auth/login.php' . (isset($_GET['app']) ? '?app=' . $_GET['app'] : ''));
+    debug_log("Page nécessitant une authentification");
+    
+    if (!isLoggedIn()) {
+        debug_log("Utilisateur non connecté");
+        
+        if ($isDesktop) {
+            debug_log("Redirection vers login (desktop)");
+            header('Location: ' . getBasePath() . '/auth/login.php?app=desktop');
+        } else {
+            debug_log("Redirection vers login (web)");
+            header('Location: ' . getBasePath() . '/auth/login.php');
+        }
         exit;
+    } else {
+        debug_log("Utilisateur connecté - ID: " . ($_SESSION['user_id'] ?? 'Non défini'));
     }
 }
 ?>

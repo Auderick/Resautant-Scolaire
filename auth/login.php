@@ -37,10 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
     if (empty($username) || empty($password)) {
-        $error = 'Veuillez remplir tous les champs';
-    } else {
+        $error = 'Veuillez remplir tous les champs';    } else {
         if (connectUser($username, $password)) {
-            header('Location: ../index.php');
+            $redirectUrl = '../index.php';
+            if (isset($_GET['app']) && $_GET['app'] === 'desktop') {
+                $redirectUrl .= '?app=desktop';
+            }
+            header('Location: ' . $redirectUrl);
             exit;
         } else {
             $error = 'Nom d\'utilisateur ou mot de passe incorrect';
