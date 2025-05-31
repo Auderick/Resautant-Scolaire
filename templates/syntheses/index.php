@@ -3,7 +3,6 @@
 setlocale(LC_TIME, 'fr_FR.UTF-8', 'fra');
 date_default_timezone_set('Europe/Paris');
 
-require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/header.php';
 require_once __DIR__ . '/../../src/Models/synthese.php';
@@ -11,7 +10,7 @@ require_once __DIR__ . '/../../src/Models/synthese.php';
 $mois = isset($_GET['mois']) ? $_GET['mois'] : date('m');
 $annee = isset($_GET['annee']) ? $_GET['annee'] : date('Y');
 
-$synthese = new Synthese($db);
+$synthese = new Synthese();
 $donnees_mois = $synthese->getSyntheseMensuelle($mois, $annee);
 $donnees_annee = $synthese->getSyntheseAnnuelle($annee);
 

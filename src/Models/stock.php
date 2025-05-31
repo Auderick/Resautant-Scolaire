@@ -10,17 +10,19 @@ class Stock
 
     public function __construct()
     {
-        $config = require_once __DIR__ . '/../../config/database.php';
         try {
-            $this->db = new PDO(
-                "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset=utf8mb4",
-                $config['user'],
-                $config['password'],
-                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4")
-            );
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            require_once __DIR__ . '/../../config/db.php';
+            $this->db = getPDO();
+            
+            if (!$this->db) {
+                throw new \RuntimeException("La connexion à la base de données n'a pas été initialisée");
+            }
+            
+            // Vérifier la connexion
+            $this->db->query("SELECT 1");
         } catch (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
+            error_log("Erreur de connexion à la base de données : " . $e->getMessage());
+            throw new PDOException("Erreur de connexion à la base de données : " . $e->getMessage());
         }
     }
 
@@ -295,7 +297,9 @@ class Stock
                         END as stock_status
                     FROM stocks s
                     WHERE 1=1";
-            $params = array();            if ($mois !== null && $annee !== null) {
+            $params = array();
+            
+            if ($mois !== null && $annee !== null) {
                 $date_format = sprintf('%04d-%02d', $annee, $mois);
                 $sql .= " AND DATE_FORMAT(s.date_maj, '%Y-%m') = :date_format";
                 $params[':date_format'] = $date_format;
@@ -309,9 +313,10 @@ class Stock
             }
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
         } catch (PDOException $e) {
-            error_log("Erreur lors de la récupération de la liste des mouvements: " . $e->getMessage());
-            return false;
+            error_log("Erreur lors de la récupération de la liste des stocks: " . $e->getMessage());
+            return []; // Retourne un tableau vide en cas d'erreur au lieu de false
         }
     }
 

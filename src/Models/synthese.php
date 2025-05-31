@@ -6,9 +6,22 @@ class Synthese
 {
     private $db;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        try {
+            require_once __DIR__ . '/../../config/db.php';
+            $this->db = getPDO();
+            
+            if (!$this->db) {
+                throw new \RuntimeException("La connexion à la base de données n'a pas été initialisée");
+            }
+            
+            // Vérifier la connexion
+            $this->db->query("SELECT 1");
+        } catch (PDOException $e) {
+            error_log("Erreur de connexion à la base de données : " . $e->getMessage());
+            throw new PDOException("Erreur de connexion à la base de données : " . $e->getMessage());
+        }
     }
 
     public function updateValeurStockMensuel($mois, $annee)

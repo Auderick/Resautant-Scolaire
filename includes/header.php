@@ -36,49 +36,37 @@ if (!in_array($current_file, $auth_pages)) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="fr" class="h-100">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Scolaire</title>
-    <!-- CSS Dependencies -->
-    <link rel="stylesheet"
-        href="<?php echo getBasePath(); ?>/public/vendor/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="<?php echo getBasePath(); ?>/public/vendor/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet"
-        href="<?php echo getBasePath(); ?>/public/vendor/select2/select2.min.css">
-    <link rel="stylesheet"
-        href="<?php echo getBasePath(); ?>/public/vendor/roboto/roboto.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet"
-        href="<?php echo getBasePath(); ?>/public/css/style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Application de gestion du restaurant scolaire">
+    <title>Restaurant Scolaire</title>    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <link href="<?php echo getBasePath(); ?>/public/vendor/roboto/roboto.css" type="text/css" rel="stylesheet">
+    <link href="<?php echo getBasePath(); ?>/public/css/style.css" type="text/css" rel="stylesheet">
+        
     <!-- JavaScript Dependencies -->
-    <script
-        src="<?php echo getBasePath(); ?>/public/vendor/jquery/jquery-3.7.1.min.js">
-    </script>
-    <script
-        src="<?php echo getBasePath(); ?>/public/vendor/select2/select2.min.js">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
-    <header class="bg-primary">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+<body class="d-flex flex-column min-vh-100">    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
             <div class="container">
-                <a class="navbar-brand"
-                    href="<?php echo getBasePath(); ?>/">Restaurant
-                    Scolaire</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <a class="navbar-brand d-flex align-items-center" href="<?php echo getBasePath(); ?>/">
+                    <i class="bi bi-building me-2"></i>
+                    <span>Restaurant Scolaire</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link"
+                            <a class="nav-link px-3 active"
                                 href="<?php echo getBasePath(); ?>/">Accueil</a>
                         </li>
                         <li class="nav-item">
@@ -138,5 +126,5 @@ if (!in_array($current_file, $auth_pages)) {
                 </div>
             </div>
         </nav>
-    </header>
-    <main class="container py-4">
+    </header>    <main class="flex-shrink-0 mt-5 pt-3">
+        <div class="container py-4">

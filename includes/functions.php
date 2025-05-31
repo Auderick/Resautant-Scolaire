@@ -2,20 +2,29 @@
 
 function formatDateToFrench($date, $format = 'MMMM y')
 {
-    $formatter = new IntlDateFormatter(
-        'fr_FR',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::FULL,
-        'Europe/Paris',
-        IntlDateFormatter::GREGORIAN,
-        $format
-    );
-
     if (is_string($date)) {
         $date = new DateTime($date);
     }
 
-    return ucfirst($formatter->format($date));
+    $mois_fr = array(
+        1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+    );
+
+    switch ($format) {
+        case 'MMMM y':
+            return ucfirst($mois_fr[$date->format('n')] . ' ' . $date->format('Y'));
+        case 'd MMMM Y':
+            return $date->format('j') . ' ' . $mois_fr[$date->format('n')] . ' ' . $date->format('Y');
+        case 'EEEE d MMMM Y':
+            $jours_fr = array(
+                'Monday' => 'lundi', 'Tuesday' => 'mardi', 'Wednesday' => 'mercredi',
+                'Thursday' => 'jeudi', 'Friday' => 'vendredi', 'Saturday' => 'samedi', 'Sunday' => 'dimanche'
+            );
+            return ucfirst($jours_fr[$date->format('l')] . ' ' . $date->format('j') . ' ' . $mois_fr[$date->format('n')] . ' ' . $date->format('Y'));
+        default:
+            return $date->format('d/m/Y');
+    }
 }
 
 
@@ -40,11 +49,37 @@ function formatNombre($valeur)
  */
 function getBasePath()
 {
-    // Si nous sommes dans l'application Electron
+    // Détection si nous sommes dans l'app Electron
     if (isset($_GET['app']) && $_GET['app'] === 'electron') {
-        return '';
+        return '.';
     }
-
-    // Pour le développement web standard
-    return '';
+    
+    // Pour l'environnement web
+    $scriptPath = $_SERVER['SCRIPT_NAME'];
+    
+    // Chercher plusieurs dossiers possibles
+    $possiblePaths = ['/templates/', '/auth/', '/api/'];
+    
+    foreach ($possiblePaths as $path) {
+        $position = strpos($scriptPath, $path);
+        if ($position !== false) {
+            return substr($scriptPath, 0, $position);
+        }
+    }
+    
+    // Si aucun des dossiers n'est trouvé, retourner le dossier parent
+    $lastSlash = strrpos($scriptPath, '/');
+    return $lastSlash !== false ? substr($scriptPath, 0, $lastSlash) : '';
+    
+    $position = strpos($scriptPath, '/auth/');
+    if ($position !== false) {
+        return substr($scriptPath, 0, $position);
+    }
+    
+    $position = strpos($scriptPath, '/api/');
+    if ($position !== false) {
+        return substr($scriptPath, 0, $position);
+    }
+    
+    return dirname($scriptPath);
 }

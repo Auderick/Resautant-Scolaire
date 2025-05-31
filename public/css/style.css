@@ -18,19 +18,46 @@ body {
 }
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'Roboto', system-ui, -apple-system, Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 56px;
+    /* Hauteur de la navbar fixed-top */
+}
+
+/* Texte et typographie */
+h1,
+.h1 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.lead {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Layout et espacements */
+.py-large {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 /* Header styles */
 header {
+    position: relative;
+    z-index: 1030;
     background-color: var(--primary-color);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow .3s ease-in-out;
+    width: 100%;
+}
+
+header.scrolled {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 .navbar-brand {
@@ -53,14 +80,39 @@ main>.container {
 
 /* Card styles */
 .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
     border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: all 0.25s ease-in-out;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 2rem 1.5rem;
+}
+
+.card .bi {
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.card a {
+    color: var(--text-color);
+}
+
+.card a:hover {
+    color: var(--primary-color);
+}
+
+.card-title {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 /* Form styles */
@@ -108,6 +160,8 @@ textarea:focus {
     border-radius: 4px;
     font-weight: 500;
     transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn:hover {
@@ -160,16 +214,31 @@ tr:nth-child(even) {
 /* Footer styles */
 footer {
     background-color: #212529;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     margin-top: auto;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: rgba(255, 255, 255, .7);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+footer a:hover {
+    color: #fff;
 }
 
 .container {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: var(--bs-gutter-x, 1rem);
+    padding-left: var(--bs-gutter-x, 1rem);
     margin-right: auto;
     margin-left: auto;
+    max-width: 1320px;
+    /* Bootstrap xxl breakpoint */
 }
 
 /* Style pour les lignes d'achats appartenant à une commande */
@@ -199,4 +268,205 @@ tr.commande-header {
 tr.commande-header td {
     background-color: #e9ecef !important;
     font-weight: bold;
+}
+
+/* Améliorations de l'interface */
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Styles d'interaction et de responsivité */
+.navbar-nav .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 80%;
+}
+
+/* Amélioration du responsive */
+@media (max-width: 991.98px) {
+    .navbar {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .navbar-collapse {
+        max-height: calc(100vh - 56px);
+        overflow-y: auto;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-nav .nav-link::after {
+        display: none;
+    }
+
+    .navbar-collapse {
+        position: fixed;
+        top: 56px;
+        /* Hauteur de la navbar */
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--primary-color);
+        padding: 1rem;
+        overflow-y: auto;
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(-100%);
+    }
+
+    .navbar-collapse.show {
+        transform: translateX(0);
+    }
+
+    /* Ajustement des cartes sur mobile */
+    .card {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Fix pour les conteneurs sur mobile */
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* Fix pour les petits écrans */
+@media (max-width: 575.98px) {
+    body {
+        padding-top: 62px;
+    }
+
+    .display-4 {
+        font-size: calc(1.375rem + 1.5vw);
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .container {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+}
+
+/* Animation des cards */
+.card {
+    margin-bottom: 1rem;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+}
+
+/* Styles responsifs */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    .table-responsive {
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+}
+
+/* Correction des conteneurs imbriqués */
+.container .container {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    max-width: none;
+}
+
+/* Amélioration des transitions */
+.collapse {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Fix pour les images responsives */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fix pour les tableaux responsives */
+.table-responsive {
+    margin-bottom: 1rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix pour les éléments fixed avec bootstrap */
+html {
+    scroll-padding-top: 70px;
+    /* Hauteur de la navbar + marge */
+}
+
+/* Styles du body avec navbar fixed */
+body {
+    min-height: 100vh;
+    padding-top: 56px;
+    /* Hauteur de la navbar */
+}
+
+/* Style spécifique quand le menu mobile est ouvert */
+body.navbar-open {
+    overflow: hidden;
+}
+
+/* Fix pour le footer */
+.footer {
+    margin-top: auto !important;
+}
+
+@media (max-width: 375px) {
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    h1,
+    .h1 {
+        font-size: 1.5rem;
+    }
+
+    h2,
+    .h2 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Amélioration du contraste */
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #fff;
 }

@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-$utilisateur = new Utilisateur($db);
+$utilisateur = new Utilisateur();
 $utilisateurs = $utilisateur->getAll();
 
 // Message de succès/erreur

@@ -1,12 +1,13 @@
 <?php
+require_once __DIR__ . '/../../config/db.php';
 
 class Utilisateur
 {
     private $db;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        $this->db = getPDO();
     }
 
     public function getAll()

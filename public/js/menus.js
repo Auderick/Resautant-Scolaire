@@ -46,11 +46,9 @@ function imprimerMenu(id) {
                                     allergenes = `<span class="allergenes">⚠️: ${data.menus[jour].allergenes.entree.join(', ')}</span>`;
                                 }
                             }
-                        }
-                        jourContenu += `
+                        } jourContenu += `
                             <div class="plat">
-                                🍽️ <strong>Entrée:</strong> ${data.menus[jour].entree} ${entreeIcons}
-                                ${allergenes}
+                                <strong>Entrée:</strong> ${data.menus[jour].entree} ${allergenes}
                             </div>
                         `;
                     }
@@ -71,9 +69,7 @@ function imprimerMenu(id) {
                             }
                         }
                         jourContenu += `
-                            <div class="plat">
-                                🍲 <strong>Plat:</strong> ${data.menus[jour].plat} ${platIcons}
-                                ${allergenes}
+                            <div class="plat">                                <strong>Plat:</strong> ${data.menus[jour].plat} ${allergenes}
                             </div>
                         `;
                     }

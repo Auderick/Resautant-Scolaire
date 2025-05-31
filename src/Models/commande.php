@@ -2,20 +2,21 @@
 
 class Commande
 {
-    public $db;
-
-    public function __construct()
-    {
-        $config = require_once __DIR__ . '/../../config/database.php';
+    public $db;    public function __construct()
+    {        
         try {
-            $this->db = new PDO(
-                "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']}",
-                $config['user'],
-                $config['password']
-            );
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            require_once __DIR__ . '/../../config/db.php';
+            $this->db = getPDO();
+            
+            if (!$this->db) {
+                throw new \RuntimeException("La connexion à la base de données n'a pas été initialisée");
+            }
+            
+            // Vérifier la connexion
+            $this->db->query("SELECT 1");
         } catch (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
+            error_log("Erreur de connexion à la base de données : " . $e->getMessage());
+            throw new PDOException("Erreur de connexion à la base de données : " . $e->getMessage());
         }
     }
 

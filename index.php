@@ -3,10 +3,14 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="container">
-    <h1 class="text-center mb-5">Gestion Restaurant Scolaire</h1>
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8">
+            <h1 class="text-center display-4 mb-4">Gestion Restaurant Scolaire</h1>
+            <p class="text-center text-muted lead mb-5">Bienvenue dans votre espace de gestion</p>
+        </div>
+    </div>
 
-    <div class="row justify-content-center g-4">
-        <!-- Menus -->
+    <div class="row justify-content-center g-4">        <!-- Menus -->
         <div class="col-md-4">
             <a href="templates/menus/index.php" class="card h-100 text-decoration-none">
                 <div class="card-body text-center">
