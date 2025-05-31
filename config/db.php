@@ -10,13 +10,22 @@ $config = [
     'port' => '3307'
 ];
 
-try {
-    $db = new PDO(
-        "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}",
-        $config['user'],
-        $config['password'],
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch (Exception $e) {
-    die('Erreur de connexion : ' . $e->getMessage());
+function getPDO() {
+    static $db = null;
+    
+    if ($db === null) {
+        global $config;
+        try {
+            $db = new PDO(
+                "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}",
+                $config['user'],
+                $config['password'],
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+        } catch (Exception $e) {
+            die('Erreur de connexion : ' . $e->getMessage());
+        }
+    }
+    
+    return $db;
 }

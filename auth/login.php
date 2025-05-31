@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/db.php';
 
 function connectUser($username, $password) {
-    global $db;
+    $db = getPDO();
     
     $query = $db->prepare("SELECT * FROM utilisateurs WHERE username = ?");
     $query->execute([$username]);

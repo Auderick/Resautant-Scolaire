@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/synthese.php';
 require_once __DIR__ . '/../Utils/Logger.php';
+require_once __DIR__ . '/../../config/db.php';
 
 class Stock
 {
@@ -10,9 +11,7 @@ class Stock
 
     public function __construct()
     {
-<<<<<<< HEAD
         try {
-            require_once __DIR__ . '/../../config/db.php';
             $this->db = getPDO();
             
             if (!$this->db) {
@@ -24,21 +23,6 @@ class Stock
         } catch (PDOException $e) {
             error_log("Erreur de connexion à la base de données : " . $e->getMessage());
             throw new PDOException("Erreur de connexion à la base de données : " . $e->getMessage());
-=======
-        require_once __DIR__ . '/../../config/database.php';
-        $config = require __DIR__ . '/../../config/database.php';
-
-        try {
-            $this->db = new PDO(
-                "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8;port={$config['port']}",
-                $config['user'],
-                $config['password']
-            );
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            die("Erreur de connexion à la base de données : " . $e->getMessage());
->>>>>>> b006509d20750be4d540e20c450a0bb6c837a15e
         }
     }
 
